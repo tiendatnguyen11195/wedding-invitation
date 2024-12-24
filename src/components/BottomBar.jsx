@@ -49,14 +49,14 @@ const BottomBar = () => {
             >
               <item.icon 
                 className={cn(
-                  "h-5 w-5 mb-1 transition-colors duration-200",
+                  "h-[18px] w-[18px] sm:h-5 sm:w-5 mb-0.5 sm:mb-1 transition-colors duration-200",
                   active === item.label.toLowerCase() 
                     ? "stroke-primary" 
                     : "stroke-gray-600"
                 )} 
               />
               <span className={cn(
-                "text-xs font-medium transition-all duration-200",
+                "text-[10px] sm:text-xs font-medium transition-all duration-200 line-clamp-1",
                 active === item.label.toLowerCase() 
                   ? "scale-105" 
                   : "scale-100"

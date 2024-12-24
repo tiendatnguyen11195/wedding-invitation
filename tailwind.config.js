@@ -18,6 +18,9 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			fontFamily: {
+				serif: ['Playfair Display', 'serif'],
+			},
 			colors: {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
@@ -48,6 +51,9 @@ export default {
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
+				},
+				rose: {
+					50: '#fff1f2',
 				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

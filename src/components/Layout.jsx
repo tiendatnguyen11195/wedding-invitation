@@ -4,7 +4,7 @@ import BottomBar from './BottomBar'; // Update the import path as needed
 
 const Layout = ({ children }) => {
   return (
-    <div className="relative min-h-screen w-full bg-gray-50/40 flex items-center justify-center">
+    <div className="relative min-h-screen w-full bg-gray-100/40 flex items-center justify-center">
       <motion.div 
         className="mx-auto w-full max-w-[430px] min-h-screen bg-white relative overflow-hidden border-x border-gray-200"
         initial={{ opacity: 0 }}
