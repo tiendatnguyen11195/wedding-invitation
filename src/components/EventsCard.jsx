@@ -30,7 +30,7 @@ const Modal = ({ isOpen, onClose, eventData, children }) => {
             exit={{ opacity: 0, y: 20 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[70] w-[90%] max-w-sm"
           >
-            <div className="bg-white rounded-2xl p-6 shadow-2xl border border-gray-100">
+            <div className="bg-white transform -translate-x-1/2 -translate-y-1/2 rounded-2xl p-6 shadow-2xl border border-gray-100">
               {children}
             </div>
           </motion.div>
@@ -148,8 +148,8 @@ END:VCALENDAR`;
         isOpen={showCalendarModal} 
         onClose={() => setShowCalendarModal(false)}
       >
-        <div className="space-y-6">
-          <div className="flex justify-between items-center">
+        <div className="space-y-6 ">
+          <div className="flex justify-between  items-center">
             <h3 className="text-xl font-semibold text-gray-800">Add to Calendar</h3>
             <motion.button
               whileHover={{ scale: 1.1 }}
