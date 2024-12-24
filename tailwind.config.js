@@ -1,12 +1,18 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
 	darkMode: ["class"],
 	content: [
-		"./index.html",
 		"./src/**/*.{js,ts,jsx,tsx}",
 	],
 	theme: {
 		extend: {
+			container: {
+				center: true,
+				padding: "2rem",
+				screens: {
+					"2xl": "1400px",
+				},
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
@@ -56,5 +62,5 @@ module.exports = {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate"), require("prettier-plugin-tailwindcss")],
+	plugins: [require("tailwindcss-animate")],
 }
