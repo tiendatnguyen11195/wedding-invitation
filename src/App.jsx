@@ -1,9 +1,22 @@
 // src/App.jsx
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, Clock, Heart, Navigation as NavigationIcon, MapPin, CalendarCheck, Phone, ExternalLink } from 'lucide-react'
+import {
+  Calendar, Clock, Heart, Copy,
+  Gift,
+  CreditCard,
+  CheckCircle,
+  Wallet,
+  Star,
+  Building2, Camera, ChevronLeft, ChevronRight,
+  Navigation as NavigationIcon, MapPin, CalendarCheck, Phone, ExternalLink, MessageCircle,
+  Send,
+  Smile,
+} from 'lucide-react'
 import Layout from './components/Layout'
 import EventCards from './components/EventsCard'
+
+import Confetti from 'react-confetti';
 
 function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false)
@@ -118,7 +131,109 @@ function App() {
     location: "Grand Ballroom, Hotel Majesty",
     description: "We invite you to join us in celebrating our wedding ceremony."
   }]
+  const [copiedAccount, setCopiedAccount] = useState(null);
 
+  const bankAccounts = [
+    {
+      bank: 'Bank Central Asia',
+      accountNumber: '1234567890',
+      accountName: 'FULAN',
+      logo: '/path/to/bca-logo.png' // Add your bank logos
+    },
+    {
+      bank: 'Bank Mandiri',
+      accountNumber: '0987654321',
+      accountName: 'FULANA',
+      logo: '/path/to/mandiri-logo.png'
+    }
+  ];
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  // Example gallery items - replace with your actual images
+  const galleryItems = [
+    {
+      id: 1,
+      src: '/path/to/image1.jpg',
+      alt: 'First Date',
+      caption: 'Where it all began',
+      span: 'col-span-2'
+    },
+    {
+      id: 2,
+      src: '/path/to/image2.jpg',
+      alt: 'Proposal Day',
+      caption: 'The magical moment',
+      span: 'col-span-2'
+    },
+    {
+      id: 3,
+      src: '/path/to/image3.jpg',
+      alt: 'War Day',
+      caption: 'The magical moment',
+      span: 'col-span-2'
+    },
+    {
+      id: 4,
+      src: '/path/to/image4.jpg',
+      alt: 'D Day',
+      caption: 'The magical moment',
+      span: 'col-span-2'
+    },
+  ];
+
+  const navigateImage = (direction) => {
+    const currentIndex = galleryItems.findIndex(item => item.id === selectedImage?.id);
+    const newIndex = direction === 'next'
+      ? (currentIndex + 1) % galleryItems.length
+      : (currentIndex - 1 + galleryItems.length) % galleryItems.length;
+    setSelectedImage(galleryItems[newIndex]);
+  };
+
+  const copyToClipboard = (text, bank) => {
+    navigator.clipboard.writeText(text);
+    setCopiedAccount(bank);
+    setTimeout(() => setCopiedAccount(null), 2000);
+  };
+
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [newWish, setNewWish] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Example wishes - replace with your actual data
+  const [wishes, setWishes] = useState([
+    {
+      id: 1,
+      name: "John Doe",
+      message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
+      timestamp: "2024-12-24T23:20:00Z",
+    },
+    // Add more wishes
+  ]);
+
+  const handleSubmitWish = async (e) => {
+    e.preventDefault();
+    if (!newWish.trim()) return;
+
+    setIsSubmitting(true);
+    // Simulating API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const newWishObj = {
+      id: wishes.length + 1,
+      name: "Guest", // Replace with actual user name
+      message: newWish,
+      timestamp: new Date().toISOString(),
+      likes: 0,
+      liked: false
+    };
+
+    setWishes(prev => [newWishObj, ...prev]);
+    setNewWish('');
+    setIsSubmitting(false);
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 3000);
+  };
   // Landing Page Component (First Layer)
   const LandingPage = () => (
     <motion.div
@@ -131,7 +246,7 @@ function App() {
       <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
-  
+
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4">
         <motion.div
@@ -148,7 +263,7 @@ function App() {
               <div className="w-2 h-2 rounded-full bg-rose-300" />
               <div className="h-px w-16 bg-rose-200/50" />
             </div>
-  
+
             {/* Date and Time */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -162,7 +277,7 @@ function App() {
                   Sunday, December 24, 2024
                 </p>
               </div>
-              
+
               <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-6 py-3 rounded-xl">
                 <Clock className="w-5 h-5 text-rose-400" />
                 <p className="text-gray-700 font-medium">
@@ -170,7 +285,7 @@ function App() {
                 </p>
               </div>
             </motion.div>
-  
+
             {/* Couple Names */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -186,13 +301,13 @@ function App() {
                 </h1>
                 <div className="h-px w-24 mx-auto bg-rose-200" />
               </div>
-              
+
               <p className="text-gray-600 font-serif italic">
                 Request the pleasure of your company
                 <br />in celebrating their wedding
               </p>
             </motion.div>
-  
+
             {/* Open Invitation Button */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -222,7 +337,7 @@ function App() {
         </motion.div>
       </div>
     </motion.div>
-  );  
+  );
 
   // Main Invitation Content
   const MainContent = () => (
@@ -593,17 +708,410 @@ function App() {
         </div>
       </section>
 
-      <div id="gifts" className="min-h-screen">
-        {/* Gifts section */}
-      </div>
+      <section id="gifts" className="min-h-screen relative overflow-hidden">
+        {/* Decorative Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
 
-      <div id="gallery" className="min-h-screen">
-        {/* Gallery section */}
-      </div>
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4 mb-16"
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block text-rose-500 font-medium"
+            >
+              Wedding Gifts
+            </motion.span>
 
-      <div id="wishes" className="min-h-screen">
-        {/* Wishes section */}
-      </div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl md:text-5xl font-serif text-gray-800"
+            >
+              Share Your Blessings
+            </motion.h2>
+
+            {/* Decorative Divider */}
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center justify-center gap-4 pt-4"
+            >
+              <div className="h-[1px] w-12 bg-rose-200" />
+              <Gift className="w-5 h-5 text-rose-400" />
+              <div className="h-[1px] w-12 bg-rose-200" />
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="text-gray-600 max-w-md mx-auto"
+            >
+              Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we have provided digital options for your convenience.
+            </motion.p>
+          </motion.div>
+
+          {/* Bank Accounts Grid */}
+          <div className="max-w-2xl mx-auto grid gap-6">
+            {bankAccounts.map((account, index) => (
+              <motion.div
+                key={account.accountNumber}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 * index }}
+                className="relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-2xl transform transition-transform group-hover:scale-105 duration-300" />
+                <div className="relative backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 rounded-lg bg-white p-2 shadow-sm">
+                        <Building2 className="w-full h-full text-rose-500" /> {/* Changed from Bank to Building2 */}
+                      </div>
+                      <div>
+                        <h3 className="font-medium text-gray-800">{account.bank}</h3>
+                        <p className="text-sm text-gray-500">{account.accountName}</p>
+                      </div>
+                    </div>
+                    <Wallet className="w-5 h-5 text-rose-400" />
+                  </div>
+
+                  <div className="mt-4">
+                    <div className="flex items-center justify-between bg-gray-50/80 px-4 py-3 rounded-lg">
+                      <p className="font-mono text-gray-700">{account.accountNumber}</p>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => copyToClipboard(account.accountNumber, account.bank)}
+                        className="flex items-center space-x-1 text-rose-500 hover:text-rose-600"
+                      >
+                        {copiedAccount === account.bank ? (
+                          <CheckCircle className="w-4 h-4" />
+                        ) : (
+                          <Copy className="w-4 h-4" />
+                        )}
+                        <span className="text-sm">
+                          {copiedAccount === account.bank ? 'Copied!' : 'Copy'}
+                        </span>
+                      </motion.button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Digital Wallet QR */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <div className="inline-block backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+              <h3 className="font-medium text-gray-800 mb-4">Scan QR Code</h3>
+              <div className="w-48 h-48 bg-gray-100 rounded-lg mx-auto mb-4">
+                {/* Add your QR code image here */}
+                <div className="w-full h-full flex items-center justify-center text-gray-400">
+                  <CreditCard className="w-12 h-12" />
+                </div>
+              </div>
+              <p className="text-sm text-gray-500">Scan to send gift via digital wallet</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section id="gallery" className="min-h-screen relative overflow-hidden">
+        {/* Decorative Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4 mb-16"
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block text-rose-500 font-medium"
+            >
+              Our Moments
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl md:text-5xl font-serif text-gray-800"
+            >
+              Gallery of Love
+            </motion.h2>
+
+            {/* Decorative Divider */}
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center justify-center gap-4 pt-4"
+            >
+              <div className="h-[1px] w-12 bg-rose-200" />
+              <Camera className="w-5 h-5 text-rose-400" />
+              <div className="h-[1px] w-12 bg-rose-200" />
+            </motion.div>
+          </motion.div>
+
+          {/* Gallery Grid */}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {galleryItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`relative group ${item.span}`}
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className="relative aspect-[3/4] overflow-hidden rounded-xl cursor-pointer"
+                    onClick={() => setSelectedImage(item)}
+                  >
+                    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Heart className="w-8 h-8 text-white" />
+                      </div>
+                    </div>
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Lightbox */}
+          <AnimatePresence>
+            {selectedImage && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
+                onClick={() => setSelectedImage(null)}
+              >
+                <div className="container mx-auto px-4 relative">
+                  <motion.img
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    src={selectedImage.src}
+                    alt={selectedImage.alt}
+                    className="max-w-full max-h-[80vh] mx-auto rounded-lg"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute bottom-0 left-0 right-0 p-4 text-center text-white"
+                  >
+                    <p className="text-lg font-medium">{selectedImage.caption}</p>
+                  </motion.div>
+
+                  {/* Navigation Buttons */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateImage('prev');
+                    }}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 p-2 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
+                  >
+                    <ChevronLeft className="w-6 h-6 text-white" />
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateImage('next');
+                    }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 p-2 rounded-full backdrop-blur-sm hover:bg-white/20 transition-colors"
+                  >
+                    <ChevronRight className="w-6 h-6 text-white" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </section>
+
+      <section id="wishes" className="min-h-screen relative overflow-hidden">
+        {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
+
+        {/* Decorative Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
+
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center space-y-4 mb-16"
+          >
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="inline-block text-rose-500 font-medium"
+            >
+              Send Your Love
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl md:text-5xl font-serif text-gray-800"
+            >
+              Wedding Wishes
+            </motion.h2>
+
+            {/* Decorative Divider */}
+            <motion.div
+              initial={{ scale: 0 }}
+              whileInView={{ scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="flex items-center justify-center gap-4 pt-4"
+            >
+              <div className="h-[1px] w-12 bg-rose-200" />
+              <MessageCircle className="w-5 h-5 text-rose-400" />
+              <div className="h-[1px] w-12 bg-rose-200" />
+            </motion.div>
+          </motion.div>
+
+          {/* Wishes List */}
+          <div className="max-w-2xl mx-auto space-y-6">
+            <AnimatePresence>
+              {wishes.map((wish, index) => (
+                <motion.div
+                  key={wish.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group relative"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-2xl transform transition-transform group-hover:scale-[1.02] duration-300" />
+                  <div className="relative backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white font-medium">
+                          {wish.name[0]}
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-gray-800">{wish.name}</h4>
+                          <div className="flex items-center space-x-1 text-gray-500 text-sm">
+                            <Clock className="w-3 h-3" />
+                            <time>{new Date(wish.timestamp).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'short',
+                              day: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}</time>
+                          </div>
+                        </div>
+                      </div>
+                      {wish.liked && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="text-rose-500"
+                        >
+                          <Sparkles className="w-4 h-4" /> {/* Changed from SparklesIcon to Sparkles */}
+                        </motion.div>
+                      )}
+                    </div>
+                    <p className="text-gray-600 mb-4">{wish.message}</p>
+                    <div className="flex items-center justify-between">
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleLike(wish.id)}
+                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-sm transition-colors duration-200
+                      ${wish.liked
+                            ? 'text-rose-500 bg-rose-50'
+                            : 'text-gray-500 hover:bg-gray-50'}`}
+                      >
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+          {/* Wishes Form */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="max-w-2xl mx-auto mt-12"
+          >
+            <form onSubmit={handleSubmitWish} className="relative">
+              <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
+                <textarea
+                  // value={newWish}
+                  // onChange={(e) => setNewWish(e.target.value)}
+                  placeholder="Send your wishes to the happy couple..."
+                  className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
+                />
+                <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center space-x-2 text-gray-500">
+                    <Smile className="w-5 h-5" />
+                    <span className="text-sm">Share your blessings</span>
+                  </div>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    disabled={isSubmitting || !newWish.trim()}
+                    className={`flex items-center space-x-2 px-6 py-2.5 rounded-xl text-white font-medium transition-all duration-200
+                    ${isSubmitting || !newWish.trim()
+                        ? 'bg-gray-300 cursor-not-allowed'
+                        : 'bg-rose-500 hover:bg-rose-600'}`}
+                  >
+                    <Send className="w-4 h-4" />
+                    <span>{isSubmitting ? 'Sending...' : 'Send Wish'}</span>
+                  </motion.button>
+                </div>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      </section>
     </>
   )
 
