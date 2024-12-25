@@ -1,4 +1,4 @@
-# Modern Wedding Islamic Invitation Website
+# Modern Islamic Wedding Invitation Website
 
 ![Preview](public/preview.png)
 
