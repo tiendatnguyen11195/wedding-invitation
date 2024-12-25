@@ -33,7 +33,7 @@ const config = {
       time: "16:16 - 17:30 WIB",
       phone: "+62 123 4567 890",
       maps_url: "https://maps.google.com/?q=YourVenueLocation",
-      maps_embed: "https://www.google.com/maps/embed?pb=YOUR_EMBED_URL",
+      maps_embed: "https://www.google.com/maps/embed?pb=your-map-embed-url",
       latitude: -6.2088, // Replace with actual coordinates
       longitude: 106.8456 // Replace with actual coordinates
     },
