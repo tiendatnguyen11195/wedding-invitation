@@ -2,7 +2,7 @@
 
 ![Preview](public/preview.png)
 
-A beautiful, modern, and interactive wedding invitation website built with Next.js, Tailwind CSS, and Framer Motion. Created with ❤️ by [@mrofisr](https://github.com/mrofisr).
+A beautiful, modern, and interactive wedding invitation website built with Vite ( React ), Tailwind CSS, and Framer Motion. Created with ❤️ by [@mrofisr](https://github.com/mrofisr).
 
 ## ✨ Features
 
