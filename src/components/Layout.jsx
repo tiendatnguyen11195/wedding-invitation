@@ -8,24 +8,63 @@ const Layout = ({ children }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const audioRef = useRef(null);
-  const wasPlayingRef = useRef(false); // Track if audio was playing before tab/window change
+  const wasPlayingRef = useRef(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
 
+  // First useEffect to handle initial setup and auto-play attempt
   useEffect(() => {
     // Create audio element
     audioRef.current = new Audio(config.audio.src);
     audioRef.current.loop = config.audio.loop;
 
-    // Handle visibility change
+    // Try to autoplay
+    const attemptAutoplay = async () => {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+        wasPlayingRef.current = true;
+        setShowToast(true);
+        setTimeout(() => setShowToast(false), config.audio.toastDuration);
+      } catch (error) {
+        console.log('Autoplay failed, waiting for user interaction');
+        // Add click event listener for first interaction
+        const handleFirstInteraction = async () => {
+          try {
+            await audioRef.current.play();
+            setIsPlaying(true);
+            wasPlayingRef.current = true;
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), config.audio.toastDuration);
+            setHasInteracted(true);
+            document.removeEventListener('click', handleFirstInteraction);
+          } catch (err) {
+            console.error('Playback failed after interaction:', err);
+          }
+        };
+        document.addEventListener('click', handleFirstInteraction);
+      }
+    };
+
+    attemptAutoplay();
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  // Second useEffect to handle visibility and focus changes
+  useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        // Save current playing state
         wasPlayingRef.current = isPlaying;
         if (audioRef.current && isPlaying) {
           audioRef.current.pause();
           setIsPlaying(false);
         }
       } else {
-        // Restore playing state if it was playing before
         if (audioRef.current && wasPlayingRef.current) {
           audioRef.current.play().catch(console.error);
           setIsPlaying(true);
@@ -33,7 +72,6 @@ const Layout = ({ children }) => {
       }
     };
 
-    // Handle window focus/blur
     const handleWindowBlur = () => {
       wasPlayingRef.current = isPlaying;
       if (audioRef.current && isPlaying) {
@@ -49,11 +87,6 @@ const Layout = ({ children }) => {
       }
     };
 
-    // Add event listeners
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('blur', handleWindowBlur);
-    window.addEventListener('focus', handleWindowFocus);
-
     // Audio event listeners
     const handlePlay = () => {
       setIsPlaying(true);
@@ -66,24 +99,28 @@ const Layout = ({ children }) => {
       setShowToast(false);
     };
 
-    audioRef.current.addEventListener('play', handlePlay);
-    audioRef.current.addEventListener('pause', handlePause);
+    if (audioRef.current) {
+      audioRef.current.addEventListener('play', handlePlay);
+      audioRef.current.addEventListener('pause', handlePause);
+    }
 
-    // Cleanup
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('focus', handleWindowFocus);
+
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('blur', handleWindowBlur);
       window.removeEventListener('focus', handleWindowFocus);
-      
+
       if (audioRef.current) {
         audioRef.current.removeEventListener('play', handlePlay);
         audioRef.current.removeEventListener('pause', handlePause);
-        audioRef.current.pause();
-        audioRef.current = null;
       }
     };
-  }, []);
+  }, [isPlaying]);
 
+  // Toggle music function
   const toggleMusic = async () => {
     if (audioRef.current) {
       try {
@@ -100,7 +137,7 @@ const Layout = ({ children }) => {
     }
   };
 
-  // Save audio state before page unload
+  // Handle page unload
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (audioRef.current) {
@@ -115,7 +152,7 @@ const Layout = ({ children }) => {
 
   return (
     <div className="relative min-h-screen w-full bg-gray-100/40 flex items-center justify-center">
-      <motion.div 
+      <motion.div
         className="mx-auto w-full max-w-[430px] min-h-screen bg-white relative overflow-hidden border-x border-gray-200"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -143,7 +180,7 @@ const Layout = ({ children }) => {
         <main className="relative h-full w-full pb-[100px]">
           {children}
         </main>
-        <BottomBar/>
+        <BottomBar />
         {/* Music Info Toast */}
         <AnimatePresence>
           {showToast && (
