@@ -15,8 +15,8 @@ import {
 } from 'lucide-react'
 import Layout from './components/Layout'
 import EventCards from './components/EventsCard'
-
 import Confetti from 'react-confetti';
+import Marquee from "./components/ui/marquee";
 
 function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false)
@@ -205,6 +205,12 @@ function App() {
     {
       id: 1,
       name: "John Doe",
+      message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
+      timestamp: "2024-12-24T23:20:00Z",
+    },
+    {
+      id: 2,
+      name: "Natalie",
       message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
       timestamp: "2024-12-24T23:20:00Z",
     },
@@ -1016,62 +1022,82 @@ function App() {
           {/* Wishes List */}
           <div className="max-w-2xl mx-auto space-y-6">
             <AnimatePresence>
-              {wishes.map((wish, index) => (
-                <motion.div
-                  key={wish.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-2xl transform transition-transform group-hover:scale-[1.02] duration-300" />
-                  <div className="relative backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white font-medium">
-                          {wish.name[0]}
-                        </div>
-                        <div>
-                          <h4 className="font-medium text-gray-800">{wish.name}</h4>
-                          <div className="flex items-center space-x-1 text-gray-500 text-sm">
-                            <Clock className="w-3 h-3" />
-                            <time>{new Date(wish.timestamp).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'short',
-                              day: 'numeric',
-                              hour: '2-digit',
-                              minute: '2-digit'
-                            })}</time>
+              <Marquee speed={20}
+                gradient={false}
+                className="[--duration:20s] py-2">
+                {wishes.map((wish, index) => (
+                  <motion.div
+                    key={wish.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group relative mx-2 w-[280px]" // Added fixed width and margin
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-xl transform transition-transform group-hover:scale-[1.02] duration-300" />
+                    <div className="relative backdrop-blur-sm bg-white/80 p-4 rounded-xl border border-rose-100/50 shadow-md"> {/* Reduced padding and border radius */}
+                      <div className="flex items-start space-x-3 mb-2"> {/* Reduced margin */}
+                        {/* Avatar and Name */}
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white text-sm"> {/* Smaller avatar */}
+                            {wish.name[0]}
                           </div>
                         </div>
+
+                        {/* Name and Time */}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-medium text-gray-800 text-sm truncate"> {/* Smaller text */}
+                            {wish.name}
+                          </h4>
+                          <div className="flex items-center space-x-1 text-gray-500 text-xs"> {/* Smaller time text */}
+                            <Clock className="w-3 h-3" />
+                            <time className="truncate">
+                              {new Date(wish.timestamp).toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </time>
+                          </div>
+                        </div>
+
+                        {/* Sparkle Icon */}
+                        {wish.liked && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            className="text-rose-500 flex-shrink-0"
+                          >
+                            <Sparkles className="w-3 h-3" /> {/* Smaller icon */}
+                          </motion.div>
+                        )}
                       </div>
-                      {wish.liked && (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="text-rose-500"
+
+                      {/* Message */}
+                      <p className="text-gray-600 text-sm mb-2 line-clamp-2"> {/* Limited to 2 lines */}
+                        {wish.message}
+                      </p>
+
+                      {/* Like Button */}
+                      <div className="flex items-center justify-end"> {/* Moved to right */}
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleLike(wish.id)}
+                          className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs transition-colors duration-200
+                  ${wish.liked
+                              ? 'text-rose-500 bg-rose-50'
+                              : 'text-gray-500 hover:bg-gray-50'}`}
                         >
-                          <Sparkles className="w-4 h-4" /> {/* Changed from SparklesIcon to Sparkles */}
-                        </motion.div>
-                      )}
+                          <Star className="w-3 h-3" /> {/* Smaller icon */}
+                          <span>{wish.likes}</span>
+                        </motion.button>
+                      </div>
                     </div>
-                    <p className="text-gray-600 mb-4">{wish.message}</p>
-                    <div className="flex items-center justify-between">
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => handleLike(wish.id)}
-                        className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-sm transition-colors duration-200
-                      ${wish.liked
-                            ? 'text-rose-500 bg-rose-50'
-                            : 'text-gray-500 hover:bg-gray-50'}`}
-                      >
-                      </motion.button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+                  </motion.div>
+                ))}
+              </Marquee>
             </AnimatePresence>
           </div>
           {/* Wishes Form */}
