@@ -8,6 +8,7 @@ import {
   CheckCircle,
   Wallet,
   Star,
+  User,
   Building2, Camera, ChevronLeft, ChevronRight,
   Navigation as NavigationIcon, MapPin, CalendarCheck, Phone, ExternalLink, MessageCircle,
   Send,
@@ -20,7 +21,7 @@ import Marquee from "./components/ui/marquee";
 
 function App() {
   const [isInvitationOpen, setIsInvitationOpen] = useState(false)
-
+  const [guestName, setGuestName] = useState('');
   const CountdownTimer = ({ targetDate }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
@@ -1109,12 +1110,33 @@ function App() {
           >
             <form onSubmit={handleSubmitWish} className="relative">
               <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
-                <textarea
-                  // value={newWish}
-                  // onChange={(e) => setNewWish(e.target.value)}
-                  placeholder="Send your wishes to the happy couple..."
-                  className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
-                />
+                {/* Name Input */}
+                <div className='space-y-2'>
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
+                    <User className="w-4 h-4" />
+                    <span>Your Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Enter your name..."
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
+                    required
+                  />
+                </div>
+                {/* Wish Textarea */}
+                <div className="space-y-2">
+                  <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Your Wish</span>
+                  </div>
+                  <textarea
+                    placeholder="Send your wishes to the happy couple..."
+                    className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
+                    required
+                  />
+                </div>
+                </div>
                 <div className="flex items-center justify-between mt-4">
                   <div className="flex items-center space-x-2 text-gray-500">
                     <Smile className="w-5 h-5" />
@@ -1123,9 +1145,8 @@ function App() {
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    disabled={isSubmitting || !newWish.trim()}
                     className={`flex items-center space-x-2 px-6 py-2.5 rounded-xl text-white font-medium transition-all duration-200
-                    ${isSubmitting || !newWish.trim()
+                    ${isSubmitting
                         ? 'bg-gray-300 cursor-not-allowed'
                         : 'bg-rose-500 hover:bg-rose-600'}`}
                   >

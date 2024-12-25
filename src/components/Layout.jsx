@@ -113,41 +113,6 @@ const Layout = ({ children }) => {
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Welcome Modal for Music */}
-        <AnimatePresence>
-          {!isPlaying && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm"
-              onClick={toggleMusic}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="bg-white p-6 rounded-2xl shadow-xl max-w-xs mx-4 text-center"
-                onClick={e => e.stopPropagation()}
-              >
-                <Music className="w-12 h-12 text-rose-500 mx-auto mb-4" />
-                <h3 className="text-xl font-medium text-gray-800 mb-2">
-                  Wedding Music
-                </h3>
-                <p className="text-gray-600 mb-4">
-                  Click the button below to play the background music
-                </p>
-                <button
-                  onClick={toggleMusic}
-                  className="w-full px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600 transition-colors"
-                >
-                  Play Music
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.div>
     </div>
   );
