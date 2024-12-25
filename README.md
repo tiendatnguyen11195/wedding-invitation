@@ -9,9 +9,8 @@ A beautiful, modern, and interactive wedding invitation website built with Next.
 - 🎨 Modern and elegant design
 - 📱 Fully responsive layout
 - 🎵 Background music with controls
-- 💌 Interactive wishes section
+- 💌 Interactive wishes section ( WIP )
 - ⚡ Smooth animations and transitions
-- 🌙 Custom scrollbar design
 - 🎉 Confetti effects
 - 📅 Countdown timer
 - 🗺️ Google Maps integration
@@ -19,7 +18,7 @@ A beautiful, modern, and interactive wedding invitation website built with Next.
 
 ## 🚀 Tech Stack
 
-- [Next.js](https://nextjs.org/) - React Framework
+- [Vite ( React )](https://vite.dev/) - React Framework
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
 - [Framer Motion](https://www.framer.com/motion/) - Animations
 - [Lucide Icons](https://lucide.dev/) - Icons
@@ -42,8 +41,6 @@ bun install
 3. Run the development server:
 ```bash
 bun run dev
-# or
-yarn dev
 ```
 
 Open http://localhost:3000 with your browser to see the result.
