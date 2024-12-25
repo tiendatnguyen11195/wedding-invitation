@@ -1,18 +1,18 @@
 // EventCard.jsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  CalendarPlus, 
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  CalendarPlus,
   X,
   Chrome,
   Apple,
   Calendar as CalendarIcon
 } from 'lucide-react';
 
-const Modal = ({ isOpen, onClose, eventData, children }) => {
+const Modal = ({ isOpen, onClose, children }) => {
   return (
     <AnimatePresence>
       {isOpen && (
@@ -58,7 +58,7 @@ const SingleEventCard = ({ eventData }) => {
   const googleCalendarLink = () => {
     const startDate = new Date(`${eventData.date}T${eventData.startTime}:00`);
     const endDate = new Date(`${eventData.date}T${eventData.endTime}:00`);
-    
+
     const formatDate = (date) => {
       return date.toISOString().replace(/-|:|\.\d+/g, '');
     };
@@ -69,7 +69,7 @@ const SingleEventCard = ({ eventData }) => {
   const generateICSContent = () => {
     const startDate = new Date(`${eventData.date}T${eventData.startTime}:00`);
     const endDate = new Date(`${eventData.date}T${eventData.endTime}:00`);
-    
+
     const formatICSDate = (date) => {
       return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
     };
@@ -101,7 +101,7 @@ END:VCALENDAR`;
   // Format date to readable string
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { 
+    return date.toLocaleDateString('en-US', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -111,7 +111,7 @@ END:VCALENDAR`;
 
   return (
     <div className="relative">
-      <motion.div 
+      <motion.div
         className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-4"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -144,8 +144,8 @@ END:VCALENDAR`;
         </div>
       </motion.div>
 
-      <Modal 
-        isOpen={showCalendarModal} 
+      <Modal
+        isOpen={showCalendarModal}
         onClose={() => setShowCalendarModal(false)}
       >
         <div className="space-y-6 ">

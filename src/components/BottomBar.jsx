@@ -1,12 +1,11 @@
 // src/components/bottom-bar/BottomBar.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
+import {
   Home,
-  CalendarHeart, 
-  MapPin, 
+  CalendarHeart,
+  MapPin,
   Gift,
-  Image,
   MessageCircleHeart
 } from 'lucide-react';
 import { cn } from "@/lib/utils";
@@ -16,7 +15,6 @@ const menuItems = [
   { icon: CalendarHeart, label: 'Event', href: '#event' },
   { icon: MapPin, label: 'Location', href: '#location' },
   { icon: Gift, label: 'Gifts', href: '#gifts' },
-  { icon: Image, label: 'Gallery', href: '#gallery' },
   { icon: MessageCircleHeart, label: 'Wishes', href: '#wishes' },
 ];
 
@@ -24,7 +22,7 @@ const BottomBar = () => {
   const [active, setActive] = React.useState('home');
 
   return (
-    <motion.div 
+    <motion.div
       className="fixed bottom-4 transform -translate-x-1/2 z-50 w-full px-4 max-w-[430px]"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -39,26 +37,26 @@ const BottomBar = () => {
               className={cn(
                 "flex flex-col items-center justify-center py-2 px-3 rounded-xl transition-all duration-200",
                 "hover:bg-gray-50/80",
-                active === item.label.toLowerCase() 
-                  ? "text-primary bg-primary/5" 
+                active === item.label.toLowerCase()
+                  ? "text-primary bg-primary/5"
                   : "text-gray-600"
               )}
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActive(item.label.toLowerCase())}
             >
-              <item.icon 
+              <item.icon
                 className={cn(
                   "h-[18px] w-[18px] sm:h-5 sm:w-5 mb-0.5 sm:mb-1 transition-colors duration-200",
-                  active === item.label.toLowerCase() 
-                    ? "stroke-primary" 
+                  active === item.label.toLowerCase()
+                    ? "stroke-primary"
                     : "stroke-gray-600"
-                )} 
+                )}
               />
               <span className={cn(
                 "text-[10px] sm:text-xs font-medium transition-all duration-200 line-clamp-1",
-                active === item.label.toLowerCase() 
-                  ? "scale-105" 
+                active === item.label.toLowerCase()
+                  ? "scale-105"
                   : "scale-100"
               )}>
                 {item.label}

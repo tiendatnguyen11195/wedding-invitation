@@ -3,9 +3,13 @@
         "extendedDiagnostics": true,
         "baseUrl": "./",
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": [
+                "src/*"
+            ]
         },
         "jsx": "react-jsx"
     },
-    "include": ["src/**/*"]
+    "include": [
+        "src/**/*"
+    ]
 }
