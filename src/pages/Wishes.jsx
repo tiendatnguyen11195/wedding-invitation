@@ -2,20 +2,32 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Confetti from 'react-confetti';
 import Marquee from "@/components/ui/marquee";
 import {
+    Calendar,
     Clock,
+    ChevronDown,
     Star,
     User,
     MessageCircle,
     Send,
     Smile,
-  } from 'lucide-react'
+    CheckCircle,
+    XCircle,
+    HelpCircle,
+} from 'lucide-react'
 import { useState } from 'react';
 
 export default function Wishes() {
     const [showConfetti, setShowConfetti] = useState(false);
     const [newWish, setNewWish] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [attendance, setAttendance] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
 
+    const options = [
+        { value: 'attending', label: 'Yes, I will attend' },
+        { value: 'not-attending', label: 'No, I cannot attend' },
+        { value: 'maybe', label: 'Maybe, I will confirm later' }
+    ];
     // Example wishes - replace with your actual data
     const [wishes, setWishes] = useState([
         {
@@ -23,14 +35,23 @@ export default function Wishes() {
             name: "John Doe",
             message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
             timestamp: "2024-12-24T23:20:00Z",
+            attending: "attending"
         },
         {
             id: 2,
             name: "Natalie",
             message: "Wishing you both a lifetime of love, laughter, and happiness! 🎉",
             timestamp: "2024-12-24T23:20:00Z",
+            attending: "attending"
         },
-        // Add more wishes
+        {
+            id: 3,
+            name: "mrofisr",
+            message: "Congratulations on your special day! May Allah bless your union! 🤲",
+            timestamp: "2024-12-25T23:08:09Z",
+            attending: "maybe"
+        }
+        
     ]);
 
     const handleSubmitWish = async (e) => {
@@ -45,9 +66,8 @@ export default function Wishes() {
             id: wishes.length + 1,
             name: "Guest", // Replace with actual user name
             message: newWish,
-            timestamp: new Date().toISOString(),
-            likes: 0,
-            liked: false
+            attend: "attending",
+            timestamp: new Date().toISOString()
         };
 
         setWishes(prev => [newWishObj, ...prev]);
@@ -55,6 +75,18 @@ export default function Wishes() {
         setIsSubmitting(false);
         setShowConfetti(true);
         setTimeout(() => setShowConfetti(false), 3000);
+    };
+    const getAttendanceIcon = (status) => {
+        switch (status) {
+            case 'attending':
+                return <CheckCircle className="w-4 h-4 text-emerald-500" />;
+            case 'not-attending':
+                return <XCircle className="w-4 h-4 text-rose-500" />;
+            case 'maybe':
+                return <HelpCircle className="w-4 h-4 text-amber-500" />;
+            default:
+                return null;
+        }
     };
     return (<>
         <section id="wishes" className="min-h-screen relative overflow-hidden">
@@ -117,24 +149,31 @@ export default function Wishes() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -20 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative mx-2 w-[280px]" // Added fixed width and margin
+                                    className="group relative w-[280px]"
                                 >
+                                    {/* Background gradient */}
                                     <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-xl transform transition-transform group-hover:scale-[1.02] duration-300" />
-                                    <div className="relative backdrop-blur-sm bg-white/80 p-4 rounded-xl border border-rose-100/50 shadow-md"> {/* Reduced padding and border radius */}
-                                        <div className="flex items-start space-x-3 mb-2"> {/* Reduced margin */}
-                                            {/* Avatar and Name */}
+
+                                    {/* Card content */}
+                                    <div className="relative backdrop-blur-sm bg-white/80 p-4 rounded-xl border border-rose-100/50 shadow-md">
+                                        {/* Header */}
+                                        <div className="flex items-start space-x-3 mb-2">
+                                            {/* Avatar */}
                                             <div className="flex-shrink-0">
-                                                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white text-sm"> {/* Smaller avatar */}
-                                                    {wish.name[0]}
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-rose-400 to-pink-400 flex items-center justify-center text-white text-sm font-medium">
+                                                    {wish.name[0].toUpperCase()}
                                                 </div>
                                             </div>
 
-                                            {/* Name and Time */}
+                                            {/* Name, Time, and Attendance */}
                                             <div className="flex-1 min-w-0">
-                                                <h4 className="font-medium text-gray-800 text-sm truncate"> {/* Smaller text */}
-                                                    {wish.name}
-                                                </h4>
-                                                <div className="flex items-center space-x-1 text-gray-500 text-xs"> {/* Smaller time text */}
+                                                <div className="flex items-center space-x-2">
+                                                    <h4 className="font-medium text-gray-800 text-sm truncate">
+                                                        {wish.name}
+                                                    </h4>
+                                                    {getAttendanceIcon(wish.attending)}
+                                                </div>
+                                                <div className="flex items-center space-x-1 text-gray-500 text-xs">
                                                     <Clock className="w-3 h-3" />
                                                     <time className="truncate">
                                                         {new Date(wish.timestamp).toLocaleDateString('en-US', {
@@ -146,39 +185,21 @@ export default function Wishes() {
                                                     </time>
                                                 </div>
                                             </div>
-
-                                            {/* Sparkle Icon */}
-                                            {wish.liked && (
-                                                <motion.div
-                                                    initial={{ scale: 0 }}
-                                                    animate={{ scale: 1 }}
-                                                    className="text-rose-500 flex-shrink-0"
-                                                >
-                                                    <Sparkles className="w-3 h-3" /> {/* Smaller icon */}
-                                                </motion.div>
-                                            )}
                                         </div>
 
                                         {/* Message */}
-                                        <p className="text-gray-600 text-sm mb-2 line-clamp-2"> {/* Limited to 2 lines */}
+                                        <p className="text-gray-600 text-sm leading-relaxed mb-2 line-clamp-3">
                                             {wish.message}
                                         </p>
 
-                                        {/* Like Button */}
-                                        <div className="flex items-center justify-end"> {/* Moved to right */}
-                                            <motion.button
-                                                whileHover={{ scale: 1.05 }}
-                                                whileTap={{ scale: 0.95 }}
-                                                onClick={() => handleLike(wish.id)}
-                                                className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs transition-colors duration-200
-                  ${wish.liked
-                                                        ? 'text-rose-500 bg-rose-50'
-                                                        : 'text-gray-500 hover:bg-gray-50'}`}
-                                            >
-                                                <Star className="w-3 h-3" /> {/* Smaller icon */}
-                                                <span>{wish.likes}</span>
-                                            </motion.button>
-                                        </div>
+                                        {/* Optional: Time indicator for recent messages */}
+                                        {Date.now() - new Date(wish.timestamp).getTime() < 3600000 && (
+                                            <div className="absolute top-2 right-2">
+                                                <span className="px-2 py-1 rounded-full bg-rose-100 text-rose-600 text-xs font-medium">
+                                                    New
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
@@ -194,8 +215,8 @@ export default function Wishes() {
                 >
                     <form onSubmit={handleSubmitWish} className="relative">
                         <div className="backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
-                            {/* Name Input */}
                             <div className='space-y-2'>
+                                {/* Name Input */}
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <User className="w-4 h-4" />
@@ -208,6 +229,65 @@ export default function Wishes() {
                                         required
                                     />
                                 </div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 }}
+                                    className="space-y-2 relative"
+                                >
+                                    <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
+                                        <Calendar className="w-4 h-4" />
+                                        <span>Will you attend?</span>
+                                    </div>
+
+                                    {/* Custom Select Button */}
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsOpen(!isOpen)}
+                                        className="w-full px-4 py-2.5 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-left flex items-center justify-between"
+                                    >
+                                        <span className={attendance ? 'text-gray-700' : 'text-gray-400'}>
+                                            {attendance ?
+                                                options.find(opt => opt.value === attendance)?.label
+                                                : 'Select your response...'}
+                                        </span>
+                                        <ChevronDown
+                                            className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''
+                                                }`}
+                                        />
+                                    </button>
+
+                                    {/* Dropdown Options */}
+                                    <AnimatePresence>
+                                        {isOpen && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -10 }}
+                                                className="absolute z-10 w-full mt-1 bg-white rounded-xl shadow-lg border border-rose-100 overflow-hidden"
+                                            >
+                                                {options.map((option) => (
+                                                    <motion.button
+                                                        key={option.value}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setAttendance(option.value);
+                                                            setIsOpen(false);
+                                                        }}
+                                                        whileHover={{ backgroundColor: 'rgb(255, 241, 242)' }}
+                                                        className={`w-full px-4 py-2.5 text-left transition-colors
+                                        ${attendance === option.value
+                                                                ? 'bg-rose-50 text-rose-600'
+                                                                : 'text-gray-700 hover:bg-rose-50'
+                                                            }`}
+                                                    >
+                                                        {option.label}
+                                                    </motion.button>
+                                                ))}
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
                                 {/* Wish Textarea */}
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">

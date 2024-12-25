@@ -7,7 +7,7 @@ import {
     CheckCircle,
     Wallet,
     Building2,
-  } from 'lucide-react'
+} from 'lucide-react'
 import { useState } from 'react';
 export default function Gifts() {
     const [copiedAccount, setCopiedAccount] = useState(null);
@@ -61,14 +61,45 @@ export default function Gifts() {
                         <div className="h-[1px] w-12 bg-rose-200" />
                     </motion.div>
 
-                    <motion.p
+                    {/* Message Container */}
+                    <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.5 }}
-                        className="text-gray-600 max-w-md mx-auto"
+                        className="space-y-4 max-w-md mx-auto"
                     >
-                        Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we have provided digital options for your convenience.
-                    </motion.p>
+                        {/* Arabic InsyaAllah */}
+                        <p className="font-arabic text-xl text-gray-800">
+                            إن شاء الله
+                        </p>
+
+                        {/* Main Message */}
+                        <p className="text-gray-600 leading-relaxed">
+                            God willing, we will distribute all the prizes given to several mosques and institutions in need
+                        </p>
+
+                        {/* Arabic Dua */}
+                        <div className="space-y-2">
+                            <p className="font-arabic text-lg text-gray-800">
+                                جزاكم الله خيرا وبارك الله فيكم
+                            </p>
+                            <p className="text-gray-600 italic text-sm">
+                                Jazakumullahu khairan, Barakallah fiikum for the gifts
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    {/* Optional: Additional Decorative Element */}
+                    <motion.div
+                        initial={{ scale: 0 }}
+                        whileInView={{ scale: 1 }}
+                        transition={{ delay: 0.6 }}
+                        className="flex items-center justify-center gap-3 pt-4"
+                    >
+                        <div className="h-px w-8 bg-rose-200/50" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-rose-300" />
+                        <div className="h-px w-8 bg-rose-200/50" />
+                    </motion.div>
                 </motion.div>
 
                 {/* Bank Accounts Grid */}
