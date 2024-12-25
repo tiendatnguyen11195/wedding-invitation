@@ -76,6 +76,9 @@ Contributions, issues, and feature requests are welcome! Feel free to check issu
 ## 💖 Support
 Give a ⭐️ if this project helped you!
 
+## 🤲 Closing Statement
+May Allah, the Most Glorified and Exalted, grant us guidance and success, and make this project a lasting charity (amal jariyah).
+
 ## 📫 Contact
 - GitHub: [@mrofisr](https://github.com/mrofisr)
 - Instagram: [@mrofisr](https://instagram.com.com/mrofisr)
