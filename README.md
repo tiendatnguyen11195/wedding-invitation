@@ -65,7 +65,35 @@ const config = {
 ```
 
 ## 📝 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2024-present mrofisr
+
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+### Commercial Use
+
+This software can be used commercially. You may:
+- Use the software for commercial purposes
+- Modify the software and create derivative works
+- Distribute the software and modifications
+- Sublicense and sell copies of the software
+
+### Requirements
+
+When using this software, you must:
+- Include the original copyright notice
+- Include the Apache License 2.0
+- State significant changes made to the software
+- Include any notices in source files that have been modified
+
+### Additional Protection
+
+The Apache License 2.0 provides:
+- Patent protection
+- Trademark protection
+- No warranty or liability
+- Clear contribution terms
 
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check issues page.
