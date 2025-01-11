@@ -1,5 +1,6 @@
 // src/pages/LandingPage.jsx
 import config from '@/config/config';
+import { formatEventDate } from '@/lib/formatEventDate';
 import { motion } from 'framer-motion';
 import { Calendar, Clock } from 'lucide-react';
 
@@ -43,14 +44,14 @@ const LandingPage = ({ onOpenInvitation }) => (
             <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-6 py-3 rounded-xl">
               <Calendar className="w-5 h-5 text-rose-400" />
               <p className="text-gray-700 font-medium">
-                {config.event.date}
+                {formatEventDate(config.event.dateTime)}
               </p>
             </div>
 
             <div className="inline-flex flex-col items-center space-y-1 bg-white/80 px-6 py-3 rounded-xl">
               <Clock className="w-5 h-5 text-rose-400" />
               <p className="text-gray-700 font-medium">
-                {config.event.time} WIB
+                {config.event.time}
               </p>
             </div>
           </motion.div>
@@ -70,11 +71,6 @@ const LandingPage = ({ onOpenInvitation }) => (
               </h1>
               <div className="h-px w-24 mx-auto bg-rose-200" />
             </div>
-
-            <p className="text-gray-600 font-serif italic">
-              Request the pleasure of your company
-              <br />in celebrating their wedding
-            </p>
           </motion.div>
 
           {/* Open Invitation Button */}

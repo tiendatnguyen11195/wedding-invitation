@@ -22,7 +22,6 @@ const config = {
     dateTime: "2025-12-24T16:22:47Z", // ISO 8601 format
     name: "Grand Ballroom, Hotel Majesty",
     address: "Jl. Example Street No. 123, City Name",
-    date: "Sunday, December 24, 2024",
     time: "16:16 - 17:30 WIB",
     phone: "+62 123 4567 890",
     maps_url: "https://maps.google.com/?q=YourVenueLocation",
