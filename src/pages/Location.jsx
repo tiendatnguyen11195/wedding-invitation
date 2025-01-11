@@ -1,6 +1,7 @@
 import config from "@/config/config";
 import { Clock, Navigation as NavigationIcon, MapPin, CalendarCheck, Phone, ExternalLink } from 'lucide-react'
 import { motion } from 'framer-motion';
+import { formatEventDate } from "@/lib/formatEventDate";
 
 export default function Location() {
     return (<>
@@ -26,7 +27,7 @@ export default function Location() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Wedding Venue
+                        Lokasi Acara
                     </motion.span>
 
                     <motion.h2
@@ -35,7 +36,7 @@ export default function Location() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Location
+                        Lokasi
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -61,7 +62,7 @@ export default function Location() {
                         className="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg border-8 border-white"
                     >
                         <iframe
-                            src={config.event.venue.maps_url}
+                            src={config.event.maps_embed}
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
@@ -80,33 +81,33 @@ export default function Location() {
                         className="space-y-6"
                     >
                         <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                            <h3 className="text-2xl font-serif text-gray-800 mb-6">{config.event.venue.name}</h3>
+                            <h3 className="text-2xl font-serif text-gray-800 mb-6">{config.event.name}</h3>
 
                             <div className="space-y-4">
                                 <div className="flex items-start space-x-4">
                                     <MapPin className="w-5 h-5 text-rose-500 mt-1" />
-                                    <p className="text-gray-600 flex-1">{config.event.venue.address}</p>
+                                    <p className="text-gray-600 flex-1">{config.event.address}</p>
                                 </div>
 
                                 <div className="flex items-center space-x-4">
                                     <CalendarCheck className="w-5 h-5 text-rose-500" />
-                                    <p className="text-gray-600">{config.event.venue.date}</p>
+                                    <p className="text-gray-600">{formatEventDate(config.event.dateTime)}</p>
                                 </div>
 
                                 <div className="flex items-center space-x-4">
                                     <Clock className="w-5 h-5 text-rose-500" />
-                                    <p className="text-gray-600">{config.event.venue.time}</p>
+                                    <p className="text-gray-600">{config.event.time}</p>
                                 </div>
 
                                 <div className="flex items-center space-x-4">
                                     <Phone className="w-5 h-5 text-rose-500" />
-                                    <p className="text-gray-600">{config.event.venue.phone}</p>
+                                    <p className="text-gray-600">{config.event.phone}</p>
                                 </div>
 
                                 {/* Action Buttons */}
                                 <div className="grid grid-cols-2 gap-2 pt-4">
                                     <motion.a
-                                        href={config.event.venue.maps_embed}
+                                        href={config.event.maps_embed}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.02 }}
@@ -118,7 +119,7 @@ export default function Location() {
                                     </motion.a>
 
                                     <motion.a
-                                        href={config.event.venue.maps_url}
+                                        href={config.event.maps_url}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.02 }}

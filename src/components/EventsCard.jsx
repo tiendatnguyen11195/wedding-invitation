@@ -1,5 +1,5 @@
 // EventCard.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar,
@@ -11,6 +11,7 @@ import {
   Apple,
   Calendar as CalendarIcon
 } from 'lucide-react';
+import { formatEventDate } from '@/lib/formatEventDate';
 
 const Modal = ({ isOpen, onClose, children }) => {
   return (
@@ -98,17 +99,6 @@ END:VCALENDAR`;
     document.body.removeChild(link);
   };
 
-  // Format date to readable string
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
   return (
     <div className="relative">
       <motion.div
@@ -131,7 +121,7 @@ END:VCALENDAR`;
         <div className="space-y-3 text-gray-600">
           <div className="flex items-center space-x-3">
             <Calendar className="w-5 h-5 text-rose-500" />
-            <span>{formatDate(eventData.date)}</span>
+            <span>{formatEventDate(eventData.date)}</span>
           </div>
           <div className="flex items-center space-x-3">
             <Clock className="w-5 h-5 text-rose-500" />

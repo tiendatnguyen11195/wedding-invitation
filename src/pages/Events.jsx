@@ -31,7 +31,7 @@ export default function Events() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium mb-2"
                     >
-                        Save The Date
+                        Catat Tanggal Penting Ini
                     </motion.span>
 
                     <motion.h2
@@ -40,7 +40,7 @@ export default function Events() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800 leading-tight"
                     >
-                        Wedding Events
+                        Rangkaian Acara Pernikahan
                     </motion.h2>
 
                     <motion.p
@@ -49,7 +49,7 @@ export default function Events() {
                         transition={{ delay: 0.4 }}
                         className="text-gray-500 max-w-md mx-auto"
                     >
-                        Join us in celebrating our special day as we begin our journey together
+                        Kami Mengundang Anda untuk Merayakan Hari Istimewa Sebagai Awal Perjalanan Cinta Kami
                     </motion.p>
 
                     {/* Decorative Line */}

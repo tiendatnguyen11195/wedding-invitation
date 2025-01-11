@@ -31,10 +31,10 @@ export default function Hero() {
 
             if (difference > 0) {
                 timeLeft = {
-                    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-                    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-                    minutes: Math.floor((difference / 1000 / 60) % 60),
-                    seconds: Math.floor((difference / 1000) % 60),
+                    hari: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    jam: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                    menit: Math.floor((difference / 1000 / 60) % 60),
+                    detik: Math.floor((difference / 1000) % 60),
                 };
             }
 
@@ -125,7 +125,7 @@ export default function Hero() {
                         className="inline-block mx-auto"
                     >
                         <span className="px-4 py-1 text-sm bg-rose-50 text-rose-600 rounded-full border border-rose-200">
-                            Save the Date
+                            Catat Tanggal Penting Ini
                         </span>
                     </motion.div>
 
@@ -137,7 +137,7 @@ export default function Hero() {
                             transition={{ delay: 0.4 }}
                             className="text-gray-500 font-light italic"
                         >
-                            We're Getting Married
+                            InsyaAllah Kami Akan Menikah
                         </motion.p>
                         <motion.h2
                             initial={{ scale: 0.8, opacity: 0 }}
@@ -215,7 +215,7 @@ export default function Hero() {
                                         Bapak/Ibu/Saudara/i
                                     </p>
                                     <p className="text-rose-500 font-semibold text-lg">
-                                        {guestName ? guestName : "Guest"}
+                                        {guestName ? guestName : "Tamu"}
                                     </p>
                                 </motion.div>
                             </div>
