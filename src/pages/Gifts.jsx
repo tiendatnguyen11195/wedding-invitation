@@ -37,7 +37,7 @@ export default function Gifts() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Wedding Gifts
+                        Hadiah Pernikahan
                     </motion.span>
 
                     <motion.h2
@@ -46,7 +46,7 @@ export default function Gifts() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Share Your Blessings
+                        Berikan Hadiah
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -160,14 +160,25 @@ export default function Gifts() {
                     className="mt-12 text-center"
                 >
                     <div className="inline-block backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
-                        <h3 className="font-medium text-gray-800 mb-4">Scan QR Code</h3>
+                        <h3 className="font-medium text-gray-800 mb-4">
+                            Scan Kode QRIS
+                        </h3>
                         <div className="w-48 h-48 bg-gray-100 rounded-lg mx-auto mb-4">
-                            {/* Add your QR code image here */}
                             <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                <CreditCard className="w-12 h-12" />
+                                {config.qris?.image ? (
+                                    <img
+                                        src={config.qris.image}
+                                        alt="QR Code"
+                                        className="w-full h-full object-contain"
+                                    />
+                                ) : (
+                                    <CreditCard className="w-12 h-12" />
+                                )}
                             </div>
                         </div>
-                        <p className="text-sm text-gray-500">Scan to send gift via digital wallet</p>
+                        <p className="text-sm text-gray-500">
+                            Pindai untuk Mengirimkan Hadiah via Dompet Digital
+                        </p>
                     </div>
                 </motion.div>
             </div>

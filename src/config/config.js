@@ -74,7 +74,7 @@ const config = {
     }
   ],
   qris: {
-
+    image: "https://ypp.co.id/site/uploads/qris/5f7c6da47a380-qr-code-dana.jpg"
   }
 };
 
