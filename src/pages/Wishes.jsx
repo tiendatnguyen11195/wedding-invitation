@@ -5,7 +5,6 @@ import {
     Calendar,
     Clock,
     ChevronDown,
-    Star,
     User,
     MessageCircle,
     Send,
@@ -15,6 +14,7 @@ import {
     HelpCircle,
 } from 'lucide-react'
 import { useState } from 'react';
+import { formatEventDate } from '@/lib/formatEventDate';
 
 export default function Wishes() {
     const [showConfetti, setShowConfetti] = useState(false);
@@ -51,7 +51,7 @@ export default function Wishes() {
             timestamp: "2024-12-25T23:08:09Z",
             attending: "maybe"
         }
-        
+
     ]);
 
     const handleSubmitWish = async (e) => {
@@ -111,7 +111,7 @@ export default function Wishes() {
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
-                        Send Your Love
+                        Kirimkan Doa dan Harapan Terbaik Anda
                     </motion.span>
 
                     <motion.h2
@@ -120,7 +120,7 @@ export default function Wishes() {
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
-                        Wedding Wishes
+                        Pesan dan Doa
                     </motion.h2>
 
                     {/* Decorative Divider */}
@@ -176,12 +176,7 @@ export default function Wishes() {
                                                 <div className="flex items-center space-x-1 text-gray-500 text-xs">
                                                     <Clock className="w-3 h-3" />
                                                     <time className="truncate">
-                                                        {new Date(wish.timestamp).toLocaleDateString('en-US', {
-                                                            month: 'short',
-                                                            day: 'numeric',
-                                                            hour: '2-digit',
-                                                            minute: '2-digit'
-                                                        })}
+                                                        {formatEventDate(wish.timestamp)}
                                                     </time>
                                                 </div>
                                             </div>
@@ -220,11 +215,11 @@ export default function Wishes() {
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <User className="w-4 h-4" />
-                                        <span>Your Name</span>
+                                        <span>Nama Kamu</span>
                                     </div>
                                     <input
                                         type="text"
-                                        placeholder="Enter your name..."
+                                        placeholder="Masukan nama kamu..."
                                         className="w-full px-4 py-2.5 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 transition-all duration-200 text-gray-700 placeholder-gray-400"
                                         required
                                     />
@@ -237,7 +232,7 @@ export default function Wishes() {
                                 >
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <Calendar className="w-4 h-4" />
-                                        <span>Will you attend?</span>
+                                        <span>Apakah kamu hadir?</span>
                                     </div>
 
                                     {/* Custom Select Button */}
@@ -249,7 +244,7 @@ export default function Wishes() {
                                         <span className={attendance ? 'text-gray-700' : 'text-gray-400'}>
                                             {attendance ?
                                                 options.find(opt => opt.value === attendance)?.label
-                                                : 'Select your response...'}
+                                                : 'Pilih kehadiran...'}
                                         </span>
                                         <ChevronDown
                                             className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isOpen ? 'transform rotate-180' : ''
@@ -292,10 +287,10 @@ export default function Wishes() {
                                 <div className="space-y-2">
                                     <div className="flex items-center space-x-2 text-gray-500 text-sm mb-1">
                                         <MessageCircle className="w-4 h-4" />
-                                        <span>Your Wish</span>
+                                        <span>Harapan kamu</span>
                                     </div>
                                     <textarea
-                                        placeholder="Send your wishes to the happy couple..."
+                                        placeholder="Kirimkan harapan dan doa untuk kedua mempelai..."
                                         className="w-full h-32 p-4 rounded-xl bg-white/50 border border-rose-100 focus:border-rose-300 focus:ring focus:ring-rose-200 focus:ring-opacity-50 resize-none transition-all duration-200"
                                         required
                                     />
@@ -304,7 +299,7 @@ export default function Wishes() {
                             <div className="flex items-center justify-between mt-4">
                                 <div className="flex items-center space-x-2 text-gray-500">
                                     <Smile className="w-5 h-5" />
-                                    <span className="text-sm">Share your blessings</span>
+                                    <span className="text-sm">Berikan Doa Anda</span>
                                 </div>
                                 <motion.button
                                     whileHover={{ scale: 1.02 }}
@@ -315,7 +310,7 @@ export default function Wishes() {
                                             : 'bg-rose-500 hover:bg-rose-600'}`}
                                 >
                                     <Send className="w-4 h-4" />
-                                    <span>{isSubmitting ? 'Sending...' : 'Send Wish'}</span>
+                                    <span>{isSubmitting ? 'Sedang Mengirim...' : 'Kirimkan Doa'}</span>
                                 </motion.button>
                             </div>
                         </div>

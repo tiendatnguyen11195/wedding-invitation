@@ -87,7 +87,7 @@ const LandingPage = ({ onOpenInvitation }) => (
               className="group relative w-full bg-rose-500 text-white px-8 py-3 rounded-xl font-medium shadow-lg hover:bg-rose-600 transition-all duration-200"
             >
               <span className="relative z-10 flex items-center justify-center gap-2">
-                <span>Open Invitation</span>
+                <span>Buka Undangan</span>
                 <motion.span
                   animate={{ x: [0, 4, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5 }}

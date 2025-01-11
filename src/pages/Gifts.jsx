@@ -75,7 +75,7 @@ export default function Gifts() {
 
                         {/* Main Message */}
                         <p className="text-gray-600 leading-relaxed">
-                            God willing, we will distribute all the prizes given to several mosques and institutions in need
+                            Insya Allah, Kami Akan Menyalurkan Semua Hadiah yang Diberikan ke Beberapa Masjid dan Lembaga yang Membutuhkan
                         </p>
 
                         {/* Arabic Dua */}
@@ -84,7 +84,7 @@ export default function Gifts() {
                                 جزاكم الله خيرا وبارك الله فيكم
                             </p>
                             <p className="text-gray-600 italic text-sm">
-                                Jazakumullahu khairan, Barakallah fiikum for the gifts
+                                Jazakumullahu khairan, Barakallah fiikum
                             </p>
                         </div>
                     </motion.div>
