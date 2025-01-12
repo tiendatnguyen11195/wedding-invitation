@@ -95,6 +95,10 @@ The Apache License 2.0 provides:
 - No warranty or liability
 - Clear contribution terms
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=mrofisr/islamic-wedding-invitation&type=Date)](https://star-history.com/#mrofisr/islamic-wedding-invitation&Date)
+
 ## 🤝 Contributing
 Contributions, issues, and feature requests are welcome! Feel free to check issues page.
 
