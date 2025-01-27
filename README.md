@@ -1,4 +1,4 @@
-# Modern Islamic Wedding Invitation Website
+# Sakeenah: Modern Islamic Wedding Invitation Website
 
 ![Preview](public/preview.png)
 
