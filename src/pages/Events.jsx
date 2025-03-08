@@ -8,11 +8,6 @@ export default function Events() {
         <>
             {/* Event Section */}
             <section id="event" className="min-h-screen relative overflow-hidden">
-                {/* Decorative Background Elements */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
-                <div className="absolute top-0 left-0 w-64 h-64 bg-rose-100/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-                <div className="absolute bottom-0 right-0 w-64 h-64 bg-pink-100/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
-
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -85,9 +80,6 @@ export default function Events() {
                         <EventCards events={config.data.agenda} />
                     </motion.div>
                 </motion.div>
-
-                {/* Decorative Bottom Pattern */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" />
             </section>
         </>
     )

@@ -90,12 +90,6 @@ export default function Wishes() {
     return (<>
         <section id="wishes" className="min-h-screen relative overflow-hidden">
             {showConfetti && <Confetti recycle={false} numberOfPieces={200} />}
-
-            {/* Decorative Background */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-rose-50/30 to-white" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-rose-100/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-100/20 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2" />
-
             <div className="container mx-auto px-4 py-20 relative z-10">
                 {/* Section Header */}
                 <motion.div

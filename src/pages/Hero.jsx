@@ -106,12 +106,7 @@ export default function Hero() {
 
     return (
         <>
-            <section id="home" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white">
-                <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute top-0 left-0 w-20 sm:w-32 h-20 sm:h-32 bg-rose-100/50 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-                    <div className="absolute bottom-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-pink-100/50 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
-                </div>
-
+            <section id="home" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

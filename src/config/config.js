@@ -20,21 +20,23 @@ const config = {
       {
         title: "Akad Nikah",
         date: "2024-12-24",
-        time: "16:16 - 17:30 WIB",
+        startTime: "16:16",
+        endTime: "17:30",
         location: "Grand Ballroom, Hotel Majesty",
         address: "Jl. Jend. Sudirman No.1, Jakarta",
       },
       {
         title: "Resepsi Nikah",
         date: "2024-12-24",
-        time: "16:16 - 17:30 WIB",
+        startTime: "16:16",
+        endTime: "17:30",
         location: "Grand Ballroom, Hotel Majesty",
         address: "Jl. Jend. Sudirman No.1, Jakarta",
       }
     ],
     audio: {
       src: "/audio/fulfilling-humming.mp3",
-      title: "Nyanyian Merdu",
+      title: "Fulfilling Humming",
       autoplay: true,
       loop: true
     },
