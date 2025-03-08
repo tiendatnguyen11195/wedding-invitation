@@ -1,80 +1,55 @@
-// src/config.js
-
 const config = {
-  // Meta Information
-  meta: {
-    title: "Fulan & Fulana Wedding",
-    description: "We are getting married and would love for you to be a part of our celebration.",
-    ogImage: "/images/og-image.jpg", // OpenGraph image for social media
-    favicon: "/images/favicon.ico",
-  },
-
-  couple: {
+  data: {
+    title: "Pernikahan Fulan & Fulana",
+    description:
+      "Kami akan menikah dan mengundang Anda untuk turut merayakan momen istimewa ini.",
     groomName: "Fulan",
     brideName: "Fulana",
-  },
-
-  // Event Details
-  event: {
+    parentGroom: "Bapak Groom & Ibu Groom",
+    parentBride: "Bapak Bride & Ibu Bride",
     date: "2024-12-24",
-    time: "16:22",
-    timezone: "WIB",
-    dateTime: "2025-12-24T16:22:47Z", // ISO 8601 format
-    name: "Grand Ballroom, Hotel Majesty",
-    address: "Jl. Example Street No. 123, City Name",
+    maps_url: "https://goo.gl/maps/abcdef",
+    maps_embed:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0000000000005!2d106.8270733147699!3d-6.175392995514422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4f1b6d7b1e7%3A0x2e69f4f1b6d7b1e7!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1633666820004!5m2!1sid!2sid",
     time: "16:16 - 17:30 WIB",
-    phone: "+62 123 4567 890",
-    maps_url: "https://maps.google.com/?q=YourVenueLocation",
-    maps_embed: "https://www.google.com/maps/embed?pb=your-map-embed-url",
-    latitude: -6.2088, // Replace with actual coordinates
-    longitude: 106.8456 // Replace with actual coordinates
-  },
-
-  eventDetails: [{
-    title: "Akad Nikah",
-    date: "2024-12-24",
-    startTime: "16:16",
-    endTime: "17:30",
-    timeZone: "Asia/Jakarta",
     location: "Grand Ballroom, Hotel Majesty",
-    description: "We invite you to join us in celebrating our wedding ceremony."
-  }, {
-    title: "Resepsi Nikah",
-    date: "2024-12-24",
-    startTime: "16:16",
-    endTime: "17:30",
-    timeZone: "Asia/Jakarta",
-    location: "Grand Ballroom, Hotel Majesty",
-    description: "We invite you to join us in celebrating our wedding ceremony."
-  }],
-
-  audio: {
-    src: "/audio/backsound.mp3",
-    title: "Fulfilling Humming",
-    artist: "Nasheed",
-    autoplay: true,
-    loop: true,
-    toastDuration: 5000,
-    pauseOnInactive: true,
-    resumeOnReturn: true,
-  },
-
-  bankAccounts: [
-    {
-      bank: 'Bank Central Asia',
-      accountNumber: '1234567890',
-      accountName: 'FULAN',
-      logo: '/path/to/bca-logo.png'
+    address: "Jl. Jend. Sudirman No.1, Jakarta",
+    ogImage: "/images/og-image.jpg",
+    favicon: "/images/favicon.ico",
+    agenda: [
+      {
+        title: "Akad Nikah",
+        date: "2024-12-24",
+        time: "16:16 - 17:30 WIB",
+        location: "Grand Ballroom, Hotel Majesty",
+        address: "Jl. Jend. Sudirman No.1, Jakarta",
+      },
+      {
+        title: "Resepsi Nikah",
+        date: "2024-12-24",
+        time: "16:16 - 17:30 WIB",
+        location: "Grand Ballroom, Hotel Majesty",
+        address: "Jl. Jend. Sudirman No.1, Jakarta",
+      }
+    ],
+    audio: {
+      src: "/audio/fulfilling-humming.mp3",
+      title: "Nyanyian Merdu",
+      autoplay: true,
+      loop: true
     },
-    {
-      bank: 'Bank Mandiri',
-      accountNumber: '0987654321',
-      accountName: 'FULANA',
-      logo: '/path/to/mandiri-logo.png'
-    }
-  ],
-  qris: {
-    image: "https://ypp.co.id/site/uploads/qris/5f7c6da47a380-qr-code-dana.jpg"
+    banks: [
+      {
+        bank: "Bank Central Asia",
+        accountNumber: "1234567890",
+        accountName: "FULAN",
+      },
+      {
+        bank: "Bank Mandiri",
+        accountNumber: "0987654321",
+        accountName: "FULANA",
+      }
+    ]
   }
 };
 

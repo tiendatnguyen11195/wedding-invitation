@@ -9,7 +9,6 @@ export default function Hero() {
     const [guestName, setGuestName] = useState('');
 
     useEffect(() => {
-        // Get guest parameter from URL
         const urlParams = new URLSearchParams(window.location.search);
         const guestParam = urlParams.get('guest');
 
@@ -23,6 +22,7 @@ export default function Hero() {
             }
         }
     }, []);
+
     const CountdownTimer = ({ targetDate }) => {
         const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
         function calculateTimeLeft() {
@@ -37,7 +37,6 @@ export default function Hero() {
                     detik: Math.floor((difference / 1000) % 60),
                 };
             }
-
             return timeLeft;
         }
         useEffect(() => {
@@ -46,8 +45,9 @@ export default function Hero() {
             }, 1000);
             return () => clearInterval(timer);
         }, [targetDate]);
+
         return (
-            <div className="grid grid-cols-4 gap-4 mt-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
                 {Object.keys(timeLeft).map((interval) => (
                     <motion.div
                         key={interval}
@@ -55,7 +55,7 @@ export default function Hero() {
                         animate={{ scale: 1, opacity: 1 }}
                         className="flex flex-col items-center p-3 bg-white/80 backdrop-blur-sm rounded-xl border border-rose-100"
                     >
-                        <span className="text-2xl font-bold text-rose-600">
+                        <span className="text-xl sm:text-2xl font-bold text-rose-600">
                             {timeLeft[interval]}
                         </span>
                         <span className="text-xs text-gray-500 capitalize">{interval}</span>
@@ -64,6 +64,7 @@ export default function Hero() {
             </div>
         );
     };
+
     const FloatingHearts = () => {
         return (
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -91,7 +92,7 @@ export default function Hero() {
                         className="absolute"
                     >
                         <Heart
-                            className={`w-${Math.random() * 3 + 3} h-${Math.random() * 3 + 3} ${i % 3 === 0 ? 'text-rose-400' :
+                            className={`w-${Math.floor(Math.random() * 2) + 8} h-${Math.floor(Math.random() * 2) + 8} ${i % 3 === 0 ? 'text-rose-400' :
                                 i % 3 === 1 ? 'text-pink-400' :
                                     'text-red-400'
                                 }`}
@@ -102,13 +103,13 @@ export default function Hero() {
             </div>
         );
     };
+
     return (
         <>
-            <section id="home" className="min-h-screen flex flex-col items-center justify-center px-4 py-20 text-center relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white">
-                {/* Decorative Background */}
+            <section id="home" className="min-h-screen flex flex-col items-center justify-center px-4 py-16 sm:py-20 text-center relative overflow-hidden bg-gradient-to-b from-white via-rose-50/30 to-white">
                 <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute top-0 left-0 w-32 h-32 bg-rose-100/50 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
-                    <div className="absolute bottom-0 right-0 w-32 h-32 bg-pink-100/50 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
+                    <div className="absolute top-0 left-0 w-20 sm:w-32 h-20 sm:h-32 bg-rose-100/50 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2" />
+                    <div className="absolute bottom-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-pink-100/50 rounded-full blur-3xl transform translate-x-1/2 translate-y-1/2" />
                 </div>
 
                 <motion.div
@@ -117,7 +118,6 @@ export default function Hero() {
                     transition={{ duration: 0.8 }}
                     className="space-y-6 relative z-10"
                 >
-                    {/* Special Date Badge */}
                     <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
@@ -129,13 +129,12 @@ export default function Hero() {
                         </span>
                     </motion.div>
 
-                    {/* Date Display */}
                     <div className="space-y-4">
                         <motion.p
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                            className="text-gray-500 font-light italic"
+                            className="text-gray-500 font-light italic text-base sm:text-lg"
                         >
                             InsyaAllah Kami Akan Menikah
                         </motion.p>
@@ -143,31 +142,26 @@ export default function Hero() {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.6 }}
-                            className="text-5xl font-serif bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600"
+                            className="text-3xl sm:text-5xl font-serif bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600"
                         >
-                            {config.couple.groomName} & {config.couple.brideName}
+                            {config.data.groomName} & {config.data.brideName}
                         </motion.h2>
                     </div>
 
-                    {/* Time and Date Info */}
                     <motion.div
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.8 }}
                         className="relative max-w-md mx-auto"
                     >
-                        {/* Decorative Elements */}
                         <div className="absolute inset-0 bg-gradient-to-b from-rose-50/50 to-white/50 backdrop-blur-md rounded-2xl" />
 
-                        <div className="relative px-8 py-10 rounded-2xl border border-rose-100/50">
-                            {/* Top Decorative Line */}
+                        <div className="relative px-4 sm:px-8 py-8 sm:py-10 rounded-2xl border border-rose-100/50">
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-px">
-                                <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-rose-200 to-transparent" />
+                                <div className="w-20 sm:w-32 h-[2px] bg-gradient-to-r from-transparent via-rose-200 to-transparent" />
                             </div>
 
-                            {/* Content */}
                             <div className="space-y-6 text-center">
-                                {/* Date and Time */}
                                 <div className="space-y-3">
                                     <motion.div
                                         initial={{ opacity: 0 }}
@@ -176,8 +170,8 @@ export default function Hero() {
                                         className="flex items-center justify-center space-x-2"
                                     >
                                         <Calendar className="w-4 h-4 text-rose-400" />
-                                        <span className="text-gray-700 font-medium">
-                                            {formatEventDate(config.event.dateTime, "full")}
+                                        <span className="text-gray-700 font-medium text-sm sm:text-base">
+                                            {formatEventDate(config.data.date, "full")}
                                         </span>
                                     </motion.div>
 
@@ -188,30 +182,28 @@ export default function Hero() {
                                         className="flex items-center justify-center space-x-2"
                                     >
                                         <Clock className="w-4 h-4 text-rose-400" />
-                                        <span className="text-gray-700 font-medium">
-                                            {config.event.time}
+                                        <span className="text-gray-700 font-medium text-sm sm:text-base">
+                                            {config.data.time}
                                         </span>
                                     </motion.div>
                                 </div>
 
-                                {/* Divider */}
                                 <div className="flex items-center justify-center gap-3">
-                                    <div className="h-px w-12 bg-rose-200/50" />
+                                    <div className="h-px w-8 sm:w-12 bg-rose-200/50" />
                                     <div className="w-2 h-2 rounded-full bg-rose-200" />
-                                    <div className="h-px w-12 bg-rose-200/50" />
+                                    <div className="h-px w-8 sm:w-12 bg-rose-200/50" />
                                 </div>
 
-                                {/* Invitation Text */}
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     transition={{ delay: 1.1 }}
                                     className="space-y-2"
                                 >
-                                    <p className="text-gray-500 font-serif italic">
+                                    <p className="text-gray-500 font-serif italic text-sm">
                                         Kepada Yth.
                                     </p>
-                                    <p className="text-gray-600 font-medium">
+                                    <p className="text-gray-600 font-medium text-sm">
                                         Bapak/Ibu/Saudara/i
                                     </p>
                                     <p className="text-rose-500 font-semibold text-lg">
@@ -220,21 +212,17 @@ export default function Hero() {
                                 </motion.div>
                             </div>
 
-                            {/* Bottom Decorative Line */}
                             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-px">
-                                <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-rose-200 to-transparent" />
+                                <div className="w-20 sm:w-32 h-[2px] bg-gradient-to-r from-transparent via-rose-200 to-transparent" />
                             </div>
                         </div>
 
-                        {/* Background Blur Circles */}
-                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-rose-100/20 rounded-full blur-xl" />
-                        <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-rose-100/20 rounded-full blur-xl" />
+                        <div className="absolute -top-2 -right-2 w-16 sm:w-24 h-16 sm:h-24 bg-rose-100/20 rounded-full blur-xl" />
+                        <div className="absolute -bottom-2 -left-2 w-16 sm:w-24 h-16 sm:h-24 bg-rose-100/20 rounded-full blur-xl" />
                     </motion.div>
 
-                    {/* Countdown Timer */}
-                    <CountdownTimer targetDate={config.event.dateTime} />
+                    <CountdownTimer targetDate={config.data.date} />
 
-                    {/* Decorative Elements */}
                     <div className="pt-6 relative">
                         <FloatingHearts />
                         <motion.div
@@ -248,7 +236,7 @@ export default function Hero() {
                                 ease: "easeInOut"
                             }}
                         >
-                            <Heart className="w-12 h-12 text-rose-500 mx-auto" fill="currentColor" />
+                            <Heart className="w-10 sm:w-12 h-10 sm:h-12 text-rose-500 mx-auto" fill="currentColor" />
                         </motion.div>
                     </div>
                 </motion.div>

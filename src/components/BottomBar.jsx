@@ -18,6 +18,22 @@ const menuItems = [
   { icon: MessageCircleHeart, label: 'Harapan', href: '#wishes' },
 ];
 
+/**
+ * BottomBar is a React functional component that renders a fixed bottom navigation bar.
+ *
+ * This component uses Framer Motion to animate its entrance, providing smooth transitions
+ * for opacity and vertical movement. It displays a navigational menu with items that change
+ * appearance based on the active state. The component maps through a list of menu items, each
+ * containing an icon and a label, and applies interactive animations such as hover and tap
+ * effects. The active menu item is highlighted by updating text color and background styles.
+ *
+ * @component
+ * @example
+ * // Basic usage:
+ * <BottomBar />
+ *
+ * @returns {JSX.Element} A JSX element containing the animated bottom navigation bar.
+ */
 const BottomBar = () => {
   const [active, setActive] = React.useState('home');
 
