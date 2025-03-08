@@ -1,0 +1,260 @@
+name: Create New Wedding Invitation
+
+on:
+  workflow_dispatch:
+    inputs:
+      couple_info:
+        description: "Couple Names (Format: Groom Name|Bride Name)"
+        required: true
+        type: string
+      event_datetime:
+        description: "Event Date and Time (Format: YYYY-MM-DD|HH:mm)"
+        required: true
+        type: string
+      ceremony_times:
+        description: "Ceremony Times (Format: akad_start|akad_end|resepsi_start|resepsi_end)"
+        required: true
+        type: string
+      venue_details:
+        description: "Venue Details (Format: Name|Address|Phone)"
+        required: true
+        type: string
+      maps_info:
+        description: "Maps URLs (Format: maps_url|maps_embed_url)"
+        required: true
+        type: string
+      groom_bank_info:
+        description: "Groom's Bank Details (Format: Bank Name|Account Number)"
+        required: true
+        type: string
+      bride_bank_info:
+        description: "Bride's Bank Details (Format: Bank Name|Account Number)"
+        required: true
+        type: string
+      qris_url:
+        description: "QRIS Image URL"
+        required: true
+        type: string
+      project_name:
+        description: "Custom Project Name (optional)"
+        required: false
+        type: string
+
+jobs:
+  create_wedding:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Parse Inputs
+        id: parse
+        run: |
+          # Parse couple info
+          GROOM_NAME=$(echo "${{ github.event.inputs.couple_info }}" | cut -d'|' -f1)
+          BRIDE_NAME=$(echo "${{ github.event.inputs.couple_info }}" | cut -d'|' -f2)
+
+          # Parse event datetime
+          EVENT_DATE=$(echo "${{ github.event.inputs.event_datetime }}" | cut -d'|' -f1)
+          EVENT_TIME=$(echo "${{ github.event.inputs.event_datetime }}" | cut -d'|' -f2)
+
+          # Parse ceremony times
+          AKAD_START=$(echo "${{ github.event.inputs.ceremony_times }}" | cut -d'|' -f1)
+          AKAD_END=$(echo "${{ github.event.inputs.ceremony_times }}" | cut -d'|' -f2)
+          RESEPSI_START=$(echo "${{ github.event.inputs.ceremony_times }}" | cut -d'|' -f3)
+          RESEPSI_END=$(echo "${{ github.event.inputs.ceremony_times }}" | cut -d'|' -f4)
+
+          # Parse venue details
+          VENUE_NAME=$(echo "${{ github.event.inputs.venue_details }}" | cut -d'|' -f1)
+          VENUE_ADDRESS=$(echo "${{ github.event.inputs.venue_details }}" | cut -d'|' -f2)
+          VENUE_PHONE=$(echo "${{ github.event.inputs.venue_details }}" | cut -d'|' -f3)
+
+          # Parse maps info
+          MAPS_URL=$(echo "${{ github.event.inputs.maps_info }}" | cut -d'|' -f1)
+          MAPS_EMBED=$(echo "${{ github.event.inputs.maps_info }}" | cut -d'|' -f2)
+
+          # Parse bank details
+          GROOM_BANK=$(echo "${{ github.event.inputs.groom_bank_info }}" | cut -d'|' -f1)
+          GROOM_ACCOUNT=$(echo "${{ github.event.inputs.groom_bank_info }}" | cut -d'|' -f2)
+          BRIDE_BANK=$(echo "${{ github.event.inputs.bride_bank_info }}" | cut -d'|' -f1)
+          BRIDE_ACCOUNT=$(echo "${{ github.event.inputs.bride_bank_info }}" | cut -d'|' -f2)
+
+          # Set all variables for subsequent steps
+          echo "GROOM_NAME=${GROOM_NAME}" >> $GITHUB_ENV
+          echo "BRIDE_NAME=${BRIDE_NAME}" >> $GITHUB_ENV
+          echo "EVENT_DATE=${EVENT_DATE}" >> $GITHUB_ENV
+          echo "EVENT_TIME=${EVENT_TIME}" >> $GITHUB_ENV
+          echo "AKAD_START=${AKAD_START}" >> $GITHUB_ENV
+          echo "AKAD_END=${AKAD_END}" >> $GITHUB_ENV
+          echo "RESEPSI_START=${RESEPSI_START}" >> $GITHUB_ENV
+          echo "RESEPSI_END=${RESEPSI_END}" >> $GITHUB_ENV
+          echo "VENUE_NAME=${VENUE_NAME}" >> $GITHUB_ENV
+          echo "VENUE_ADDRESS=${VENUE_ADDRESS}" >> $GITHUB_ENV
+          echo "VENUE_PHONE=${VENUE_PHONE}" >> $GITHUB_ENV
+          echo "MAPS_URL=${MAPS_URL}" >> $GITHUB_ENV
+          echo "MAPS_EMBED=${MAPS_EMBED}" >> $GITHUB_ENV
+          echo "GROOM_BANK=${GROOM_BANK}" >> $GITHUB_ENV
+          echo "GROOM_ACCOUNT=${GROOM_ACCOUNT}" >> $GITHUB_ENV
+          echo "BRIDE_BANK=${BRIDE_BANK}" >> $GITHUB_ENV
+          echo "BRIDE_ACCOUNT=${BRIDE_ACCOUNT}" >> $GITHUB_ENV
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Generate Project Name
+        run: |
+          if [ -n "${{ github.event.inputs.project_name }}" ]; then
+            PROJECT_NAME="${{ github.event.inputs.project_name }}"
+          else
+            PROJECT_NAME=$(echo "${{ env.GROOM_NAME }}-${{ env.BRIDE_NAME }}-wedding-invitation" | \
+              tr '[:upper:]' '[:lower:]' | \
+              tr ' ' '-' | \
+              sed 's/[^a-z0-9-]//g')
+          fi
+          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
+
+      - name: Create Wedding Config
+        run: |
+          rm src/config/config.js
+          cat > src/config/config.js << EOL
+          const config = {
+            meta: {
+              title: "Undangan Pernikahan ${{ env.GROOM_NAME }} & ${{ env.BRIDE_NAME }}",
+              description: "Kami Akan Menikah dan Ingin Anda Menjadi Bagian dari Perayaan Kami",
+              ogImage: "/images/og-image.jpg",
+              favicon: "/images/favicon.ico"
+            },
+            couple: {
+              groomName: "${{ env.GROOM_NAME }}",
+              brideName: "${{ env.BRIDE_NAME }}"
+            },
+            event: {
+              date: "${{ env.EVENT_DATE }}",
+              time: "${{ env.EVENT_TIME }}",
+              timezone: "Asia/Jakarta",
+              dateTime: "${{ env.EVENT_DATE }}T${{ env.EVENT_TIME }}:00Z",
+              name: "${{ env.VENUE_NAME }}",
+              address: "${{ env.VENUE_ADDRESS }}",
+              phone: "${{ env.VENUE_PHONE }}",
+              maps_url: "${{ env.MAPS_URL }}",
+              maps_embed: "${{ env.MAPS_EMBED }}"
+            },
+            eventDetails: [
+              {
+                title: "Akad Nikah",
+                date: "${{ env.EVENT_DATE }}",
+                startTime: "${{ env.AKAD_START }}",
+                endTime: "${{ env.AKAD_END }}",
+                timeZone: "Asia/Jakarta",
+                location: "${{ env.VENUE_NAME }}"
+              },
+              {
+                title: "Resepsi Nikah",
+                date: "${{ env.EVENT_DATE }}",
+                startTime: "${{ env.RESEPSI_START }}",
+                endTime: "${{ env.RESEPSI_END }}",
+                timeZone: "Asia/Jakarta",
+                location: "${{ env.VENUE_NAME }}"
+              }
+            ],
+            audio: {
+              src: "/audio/backsound.mp3",
+              title: "Fulfilling Humming",
+              artist: "Nasheed",
+              autoplay: true,
+              loop: true,
+              toastDuration: 5000,
+              pauseOnInactive: true,
+              resumeOnReturn: true
+            },
+            bankAccounts: [
+              {
+                bank: "${{ env.GROOM_BANK }}",
+                accountNumber: "${{ env.GROOM_ACCOUNT }}",
+                accountName: "${{ env.GROOM_NAME }}"
+              },
+              {
+                bank: "${{ env.BRIDE_BANK }}",
+                accountNumber: "${{ env.BRIDE_ACCOUNT }}",
+                accountName: "${{ env.BRIDE_NAME }}"
+              }
+            ],
+            qris: {
+              image: "${{ github.event.inputs.qris_url }}"
+            }
+          };
+          export default config;
+          EOL
+
+      - name: Create Vercel Config
+        run: |
+          cat > vercel.json << EOL
+          {
+            "version": 2,
+            "buildCommand": "bun run build",
+            "outputDirectory": "dist",
+            "github": {
+              "enabled": false
+            },
+            "builds": [
+              {
+                "src": "package.json",
+                "use": "@vercel/static-build"
+              }
+            ],
+            "rewrites": [
+              {
+                "source": "/(.*)",
+                "destination": "/"
+              }
+            ],
+            "alias": ["${PROJECT_NAME}.vercel.app"]
+          }
+          EOL
+
+      - name: Setup and Deploy to Vercel
+        run: |
+          echo "Set to Create new project"
+          vercel project add ${{ env.PROJECT_NAME }} --token=${{ secrets.VERCEL_TOKEN }}
+
+          echo "Set to Pull environment information"
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+          echo "Set to Build project"
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} -A vercel.json
+
+          echo "Set to Deploy with custom project name"
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }} --name ${{ env.PROJECT_NAME }})
+
+          echo "Set to Alias Domain"
+          vercel alias set $DEPLOYMENT_URL ${{ env.PROJECT_NAME }}.vercel.app --token=${{ secrets.VERCEL_TOKEN }}
+
+          echo "DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "Add wedding invitation for ${{ env.GROOM_NAME }} & ${{ env.BRIDE_NAME }}"
+          commit-message: "Add new wedding config for ${{ env.PROJECT_NAME }}"
+          branch: "wedding/${{ env.PROJECT_NAME }}"
+          body: |
+            # New Wedding Invitation Created
+            
+            ## Couple Details
+            - Groom: ${{ env.GROOM_NAME }}
+            - Bride: ${{ env.BRIDE_NAME }}
+            
+            ## Event Details
+            - Date: ${{ env.EVENT_DATE }}
+            - Venue: ${{ env.VENUE_NAME }}
+            - Address: ${{ env.VENUE_ADDRESS }}
+            
+            ## Deployment
+            🌐 Website URL: https://${{ env.PROJECT_NAME }}.vercel.app

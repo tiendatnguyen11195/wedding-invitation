@@ -24,9 +24,9 @@ export default function Wishes() {
     const [isOpen, setIsOpen] = useState(false);
 
     const options = [
-        { value: 'attending', label: 'Yes, I will attend' },
-        { value: 'not-attending', label: 'No, I cannot attend' },
-        { value: 'maybe', label: 'Maybe, I will confirm later' }
+        { value: 'ATTENDING', label: 'Ya, saya akan hadir' },
+        { value: 'NOT_ATTENDING', label: 'Tidak, saya tidak bisa hadir' },
+        { value: 'MAYBE', label: 'Mungkin, saya akan konfirmasi nanti' }
     ];
     // Example wishes - replace with your actual data
     const [wishes, setWishes] = useState([
@@ -46,12 +46,11 @@ export default function Wishes() {
         },
         {
             id: 3,
-            name: "mrofisr",
+            name: "Abdur Rofi",
             message: "Congratulations on your special day! May Allah bless your union! 🤲",
             timestamp: "2024-12-25T23:08:09Z",
             attending: "maybe"
         }
-
     ]);
 
     const handleSubmitWish = async (e) => {
@@ -101,13 +100,13 @@ export default function Wishes() {
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
                     className="text-center space-y-4 mb-16"
                 >
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
@@ -116,7 +115,7 @@ export default function Wishes() {
 
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
@@ -126,7 +125,7 @@ export default function Wishes() {
                     {/* Decorative Divider */}
                     <motion.div
                         initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
+                        animate={{ scale: 1 }}
                         transition={{ delay: 0.4 }}
                         className="flex items-center justify-center gap-4 pt-4"
                     >
@@ -204,7 +203,7 @@ export default function Wishes() {
                 {/* Wishes Form */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                     className="max-w-2xl mx-auto mt-12"
                 >

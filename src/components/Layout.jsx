@@ -9,13 +9,12 @@ const Layout = ({ children }) => {
   const [showToast, setShowToast] = useState(false);
   const audioRef = useRef(null);
   const wasPlayingRef = useRef(false);
-  const [hasInteracted, setHasInteracted] = useState(false);
 
   // First useEffect to handle initial setup and auto-play attempt
   useEffect(() => {
     // Create audio element
-    audioRef.current = new Audio(config.audio.src);
-    audioRef.current.loop = config.audio.loop;
+    audioRef.current = new Audio(config.data.audio.src);
+    audioRef.current.loop = config.data.audio.loop;
 
     // Try to autoplay
     const attemptAutoplay = async () => {
@@ -24,7 +23,7 @@ const Layout = ({ children }) => {
         setIsPlaying(true);
         wasPlayingRef.current = true;
         setShowToast(true);
-        setTimeout(() => setShowToast(false), config.audio.toastDuration);
+        setTimeout(() => setShowToast(false), 3000);
       } catch (error) {
         console.log('Autoplay failed, waiting for user interaction');
         // Add click event listener for first interaction
@@ -34,8 +33,7 @@ const Layout = ({ children }) => {
             setIsPlaying(true);
             wasPlayingRef.current = true;
             setShowToast(true);
-            setTimeout(() => setShowToast(false), config.audio.toastDuration);
-            setHasInteracted(true);
+            setTimeout(() => setShowToast(false), 3000);
             document.removeEventListener('click', handleFirstInteraction);
           } catch (err) {
             console.error('Playback failed after interaction:', err);
@@ -194,7 +192,7 @@ const Layout = ({ children }) => {
               <div className="bg-black/80 text-white transform -translate-x-1/2 px-4 py-2 rounded-full backdrop-blur-sm flex items-center space-x-2">
                 <Music className="w-4 h-4 animate-pulse" />
                 <span className="text-sm whitespace-nowrap">
-                  {config.audio.title} - {config.audio.artist}
+                  {config.data.audio.title}
                 </span>
               </div>
             </motion.div>

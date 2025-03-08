@@ -8,14 +8,23 @@ import {
     Wallet,
     Building2,
 } from 'lucide-react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 export default function Gifts() {
     const [copiedAccount, setCopiedAccount] = useState(null);
+    const [hasAnimated, setHasAnimated] = useState(false);
+    
+    // Set animation to run once on component mount
+    useEffect(() => {
+        setHasAnimated(true);
+    }, []);
+    
     const copyToClipboard = (text, bank) => {
         navigator.clipboard.writeText(text);
         setCopiedAccount(bank);
         setTimeout(() => setCopiedAccount(null), 2000);
     };
+    
     return (<>
         <section id="gifts" className="min-h-screen relative overflow-hidden">
             {/* Decorative Background */}
@@ -27,13 +36,13 @@ export default function Gifts() {
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.8 }}
                     className="text-center space-y-4 mb-16"
                 >
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.2 }}
                         className="inline-block text-rose-500 font-medium"
                     >
@@ -42,7 +51,7 @@ export default function Gifts() {
 
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
                         transition={{ delay: 0.3 }}
                         className="text-4xl md:text-5xl font-serif text-gray-800"
                     >
@@ -52,7 +61,7 @@ export default function Gifts() {
                     {/* Decorative Divider */}
                     <motion.div
                         initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
+                        animate={hasAnimated ? { scale: 1 } : {}}
                         transition={{ delay: 0.4 }}
                         className="flex items-center justify-center gap-4 pt-4"
                     >
@@ -64,7 +73,7 @@ export default function Gifts() {
                     {/* Message Container */}
                     <motion.div
                         initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
+                        animate={hasAnimated ? { opacity: 1 } : {}}
                         transition={{ delay: 0.5 }}
                         className="space-y-4 max-w-md mx-auto"
                     >
@@ -92,7 +101,7 @@ export default function Gifts() {
                     {/* Optional: Additional Decorative Element */}
                     <motion.div
                         initial={{ scale: 0 }}
-                        whileInView={{ scale: 1 }}
+                        animate={hasAnimated ? { scale: 1 } : {}}
                         transition={{ delay: 0.6 }}
                         className="flex items-center justify-center gap-3 pt-4"
                     >
@@ -104,12 +113,12 @@ export default function Gifts() {
 
                 {/* Bank Accounts Grid */}
                 <div className="max-w-2xl mx-auto grid gap-6">
-                    {config.bankAccounts.map((account, index) => (
+                    {config.data.banks.map((account, index) => (
                         <motion.div
                             key={account.accountNumber}
                             initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 * index }}
+                            animate={hasAnimated ? { opacity: 1, y: 0 } : {}}
+                            transition={{ delay: 0.2 * index + 0.7 }}
                             className="relative group"
                         >
                             <div className="absolute inset-0 bg-gradient-to-r from-rose-100/50 to-pink-100/50 rounded-2xl transform transition-transform group-hover:scale-105 duration-300" />
@@ -117,7 +126,7 @@ export default function Gifts() {
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-4">
                                         <div className="w-12 h-12 rounded-lg bg-white p-2 shadow-sm">
-                                            <Building2 className="w-full h-full text-rose-500" /> {/* Changed from Bank to Building2 */}
+                                            <Building2 className="w-full h-full text-rose-500" />
                                         </div>
                                         <div>
                                             <h3 className="font-medium text-gray-800">{account.bank}</h3>
@@ -151,36 +160,6 @@ export default function Gifts() {
                         </motion.div>
                     ))}
                 </div>
-
-                {/* Digital Wallet QR */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.6 }}
-                    className="mt-12 text-center"
-                >
-                    <div className="inline-block backdrop-blur-sm bg-white/80 p-6 rounded-2xl border border-rose-100/50 shadow-lg">
-                        <h3 className="font-medium text-gray-800 mb-4">
-                            Scan Kode QRIS
-                        </h3>
-                        <div className="w-48 h-48 bg-gray-100 rounded-lg mx-auto mb-4">
-                            <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                {config.qris?.image ? (
-                                    <img
-                                        src={config.qris.image}
-                                        alt="QR Code"
-                                        className="w-full h-full object-contain"
-                                    />
-                                ) : (
-                                    <CreditCard className="w-12 h-12" />
-                                )}
-                            </div>
-                        </div>
-                        <p className="text-sm text-gray-500">
-                            Pindai untuk Mengirimkan Hadiah via Dompet Digital
-                        </p>
-                    </div>
-                </motion.div>
             </div>
         </section>
     </>)
