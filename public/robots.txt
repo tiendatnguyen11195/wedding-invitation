@@ -1,4 +1,2 @@
-// public/robots.txt
 User-agent: *
-Allow: /
-Sitemap: https://islamic-wedding-invitation.vercel.app/sitemap.xml
+Disallow: /
