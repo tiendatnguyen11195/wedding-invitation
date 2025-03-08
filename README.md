@@ -1,115 +1,109 @@
-# Sakeenah: Modern Islamic Wedding Invitation Website
+# Sakeenah: Modern Islamic Wedding Invitation
 
 ![Preview](public/preview.png)
 
-A beautiful, modern, and interactive wedding invitation website built with Vite ( React ), Tailwind CSS, and Framer Motion. Created with ❤️ by [@mrofisr](https://github.com/mrofisr).
+A modern, interactive wedding invitation website built with Vite (React), Tailwind CSS, and Framer Motion. Created by [@mrofisr](https://github.com/mrofisr).
 
-## ✨ Features
+## Features
+- Modern design & smooth animations
+- Fully responsive & mobile-first layout
+- Background music & interactive wishes (WIP)
+- Fun confetti effects and countdown timer
+- Google Maps integration
 
-- 🎨 Modern and elegant design
-- 📱 Fully responsive layout
-- 🎵 Background music with controls
-- 💌 Interactive wishes section ( WIP )
-- ⚡ Smooth animations and transitions
-- 🎉 Confetti effects
-- 📅 Countdown timer
-- 🗺️ Google Maps integration
-- 📱 Mobile-first approach
+## Tech Stack
+- [Vite (React)](https://vite.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Lucide Icons](https://lucide.dev/)
+- [React Confetti](https://www.npmjs.com/package/react-confetti)
 
-## 🚀 Tech Stack
+## Installation
+1. Clone the repository and install dependencies:
+  ```bash
+  git clone https://github.com/mrofisr/wedding-invitation.git
+  cd wedding-invitation
+  bun install
+  ```
+2. Update your wedding details in `src/config.js`.
+3. Start the development server:
+  ```bash
+  bun run dev
+  ```
+  Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Vite ( React )](https://vite.dev/) - React Framework
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Framer Motion](https://www.framer.com/motion/) - Animations
-- [Lucide Icons](https://lucide.dev/) - Icons
-- [React Confetti](https://www.npmjs.com/package/react-confetti) - Confetti Effects
-
-## 📦 Installation
-
-1. Clone this repository:
-```bash
-git clone https://github.com/mrofisr/wedding-invitation.git
-cd wedding-invitation
-bun install
-```
-
-2. Configure your wedding details:
-- Open src/config.js
-- Update the configuration with your wedding information
-- Customize colors, themes, and other settings
-
-3. Run the development server:
-```bash
-bun run dev
-```
-
-Open http://localhost:3000 with your browser to see the result.
-
-## 🎨 Customization
-Configuration
-All customizable options are available in src/config.js:
-
+## Customization
+Edit `src/config.js` to change details like the wedding title, names, and colors. For example:
 ```JavaScript
 const config = {
-  meta: {
-    title: "Your Wedding Title",
-    // ...
-  },
-  couple: {
-    groomName: "Groom Name",
-    brideName: "Bride Name",
-    // ...
-  },
-  // ... other configurations
+  data: {
+    title: "Pernikahan Fulan & Fulana",
+    description:
+      "Kami akan menikah dan mengundang Anda untuk turut merayakan momen istimewa ini.",
+    groomName: "Fulan",
+    brideName: "Fulana",
+    parentGroom: "Bapak Groom & Ibu Groom",
+    parentBride: "Bapak Bride & Ibu Bride",
+    date: "2024-12-24",
+    maps_url: "https://goo.gl/maps/abcdef",
+    maps_embed:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0000000000005!2d106.8270733147699!3d-6.175392995514422!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f4f1b6d7b1e7%3A0x2e69f4f1b6d7b1e7!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1633666820004!5m2!1sid!2sid",
+    time: "16:16 - 17:30 WIB",
+    location: "Grand Ballroom, Hotel Majesty",
+    address: "Jl. Jend. Sudirman No.1, Jakarta",
+    ogImage: "/images/og-image.jpg",
+    favicon: "/images/favicon.ico",
+    agenda: [
+      {
+        title: "Akad Nikah",
+        date: "2024-12-24",
+        startTime: "16:16",
+        endTime: "17:30",
+        location: "Grand Ballroom, Hotel Majesty",
+        address: "Jl. Jend. Sudirman No.1, Jakarta",
+      },
+      {
+        title: "Resepsi Nikah",
+        date: "2024-12-24",
+        startTime: "16:16",
+        endTime: "17:30",
+        location: "Grand Ballroom, Hotel Majesty",
+        address: "Jl. Jend. Sudirman No.1, Jakarta",
+      }
+    ],
+    audio: {
+      src: "/audio/fulfilling-humming.mp3",
+      title: "Fulfilling Humming",
+      autoplay: true,
+      loop: true
+    },
+    banks: [
+      {
+        bank: "Bank Central Asia",
+        accountNumber: "1234567890",
+        accountName: "FULAN",
+      },
+      {
+        bank: "Bank Mandiri",
+        accountNumber: "0987654321",
+        accountName: "FULANA",
+      }
+    ]
+  }
 };
+
+export default config;
+
 ```
 
-## 📝 License
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+## License
+This project is licensed under the [Apache License 2.0](https://opensource.org/licenses/Apache-2.0). You can use, modify, and distribute it as long as you include the original copyright notice and license.
 
-Copyright (c) 2024-present mrofisr
+## Contributing & Support
+Contributions and issue reports are welcome. If this project helped you, give it a ⭐️!
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-### Commercial Use
-
-This software can be used commercially. You may:
-- Use the software for commercial purposes
-- Modify the software and create derivative works
-- Distribute the software and modifications
-- Sublicense and sell copies of the software
-
-### Requirements
-
-When using this software, you must:
-- Include the original copyright notice
-- Include the Apache License 2.0
-- State significant changes made to the software
-- Include any notices in source files that have been modified
-
-### Additional Protection
-
-The Apache License 2.0 provides:
-- Patent protection
-- Trademark protection
-- No warranty or liability
-- Clear contribution terms
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=mrofisr/islamic-wedding-invitation&type=Date)](https://star-history.com/#mrofisr/islamic-wedding-invitation&Date)
-
-## 🤝 Contributing
-Contributions, issues, and feature requests are welcome! Feel free to check issues page.
-
-## 💖 Support
-Give a ⭐️ if this project helped you!
-
-## 🤲 Closing Statement
-May Allah, the Most Glorified and Exalted, grant us guidance and success, and make this project a lasting charity (amal jariyah).
-
-## 📫 Contact
+## Contact
 - GitHub: [@mrofisr](https://github.com/mrofisr)
-- Instagram: [@mrofisr](https://instagram.com.com/mrofisr)
+- Instagram: [@mrofisr](https://instagram.com/mrofisr)
 
-Made with ❤️ by **[@mrofisr](https://instagram.com.com/mrofisr)**
+May Allah guide us all.
