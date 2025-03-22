@@ -49,10 +49,6 @@ on:
         description: "Bride's Bank Details (Format: Bank Name|Account Number)"
         required: true
         type: string
-      qris_url:
-        description: "QRIS Image URL"
-        required: true
-        type: string
       project_name:
         description: "Custom Project Name (optional)"
         required: false
