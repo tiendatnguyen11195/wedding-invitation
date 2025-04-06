@@ -12,7 +12,6 @@ export default function MainContent() {
             <Events />
             <Location />
             <Gifts />
-            <Wishes />
         </>
     )
 }
