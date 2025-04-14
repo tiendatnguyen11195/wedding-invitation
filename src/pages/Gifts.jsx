@@ -147,6 +147,23 @@ export default function Gifts() {
                         </motion.div>
                     ))}
                 </div>
+
+                <div className="flex justify-center pt-8">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        className="rounded-lg border border-gray-200 shadow-sm p-2 bg-white"
+                    >
+                        <img
+                        src="/images/qr.jpg"  // or "./assets/qr-wallet.png" if you're importing it
+                        alt="Wallet QR Code"
+                        className="rounded-md"
+                        />
+                    </motion.div>
+                </div>
+
             </div>
         </section>
     </>)
