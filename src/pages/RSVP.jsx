@@ -6,9 +6,14 @@ export default function RSVP() {
     name: '',
     attending: '',
     dietary: '',
+    passcode: '',
   })
 
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+
+  // Replace with your actual passcode
+  const VALID_PASSCODE = '21062025'
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -16,7 +21,13 @@ export default function RSVP() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Here you'd handle sending the form data (e.g., to a Google Sheet, API, etc.)
+
+    if (formData.passcode !== VALID_PASSCODE) {
+      setError('Invalid passcode. Please check your invitation.')
+      return
+    }
+
+    // You can submit the form data here (API call, email, etc.)
     console.log('RSVP Submitted:', formData)
     setSubmitted(true)
   }
@@ -32,7 +43,9 @@ export default function RSVP() {
           className="space-y-4"
         >
           <h2 className="text-4xl font-serif text-gray-800">RSVP</h2>
-          <p className="text-gray-600">Let us know if you’ll be joining us, and share your dietary preferences.</p>
+          <p className="text-gray-600">
+            Let us know if you’ll be joining us — and don’t forget your passcode 💌
+          </p>
         </motion.div>
 
         {submitted ? (
@@ -41,7 +54,7 @@ export default function RSVP() {
             animate={{ opacity: 1 }}
             className="text-green-600 font-medium mt-8"
           >
-            Thank you! We’ve received your RSVP 💌
+            Thank you! We’ve received your RSVP 🎉
           </motion.div>
         ) : (
           <form
@@ -91,6 +104,21 @@ export default function RSVP() {
                 placeholder="E.g., vegetarian, gluten-free..."
                 className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-rose-400 focus:outline-none"
               />
+            </div>
+
+            <div>
+              <label htmlFor="passcode" className="block text-sm font-medium text-gray-700 mb-1">
+                Invitation Passcode
+              </label>
+              <input
+                type="text"
+                name="passcode"
+                required
+                value={formData.passcode}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-rose-400 focus:outline-none"
+              />
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
 
             <button
