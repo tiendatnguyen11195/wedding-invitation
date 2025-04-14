@@ -19,19 +19,43 @@ export default function RSVP() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyzxWdWp-it-NbOAMcoPYBtqHJstZNVWjrs_UuHz05vMYCqRbzU4RHLDorlbVS0RDh0Sw/exec";
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
     if (formData.passcode !== VALID_PASSCODE) {
-      setError('Invalid passcode. Please check your invitation.')
-      return
+      setError('Invalid passcode');
+      return;
     }
-
-    // You can submit the form data here (API call, email, etc.)
-    console.log('RSVP Submitted:', formData)
-    setSubmitted(true)
-  }
-
+  
+    try {
+      const response = await fetch(GOOGLE_SHEET_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          name: formData.name,
+          invite_code: formData.passcode,
+          attending: formData.attending,
+          dietary: formData.dietary,
+          passcode: formData.passcode,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const result = await response.json();
+      if (result.result === "success") {
+        setSubmitted(true);
+      } else {
+        setError("Submission failed");
+      }
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setError("Something went wrong");
+    }
+  };
+  
   return (
     <section id="rsvp" className="min-h-screen bg-white py-20 px-4">
       <div className="container max-w-xl mx-auto text-center space-y-8">
@@ -60,6 +84,7 @@ export default function RSVP() {
           <form
             onSubmit={handleSubmit}
             className="bg-gray-50 p-6 rounded-2xl shadow-lg space-y-6 text-left"
+            method="POST"
           >
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
