@@ -17,7 +17,6 @@ const menuItems = [
   { icon: Palette, label: 'Attire', href: '#dress-code' },
   { icon: CalendarHeart, label: 'Event', href: '#event' },
   { icon: MapPin, label: 'Location', href: '#location' },
-  { icon: Gift, label: 'Gifts', href: '#gifts' },
 ];
 
 /**

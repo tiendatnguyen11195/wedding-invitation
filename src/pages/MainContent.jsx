@@ -14,7 +14,6 @@ export default function MainContent() {
             <DressCode />
             <Events />
             <Location />
-            <Gifts />
         </>
     )
 }

@@ -19,7 +19,7 @@ export default function RSVP() {
                         <iframe
                             src="https://tally.so/embed/npZv5b"
                             title="RSVP Form"
-                            className="w-full h-[1250px]"
+                            className="w-full h-[1300px]"
                         ></iframe>
                     </div>
                 </div>
